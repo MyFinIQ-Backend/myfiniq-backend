@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout – Ebook 3 | MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="buecher">
+  <main class="section">
+    <div class="container pricing-card">
+      <section class="card">
+        <h1>Checkout – Ebook 3</h1>
+        <p>Du kaufst jetzt das E-Book: <strong>Die stille KI-Revolution: Wie Anleger jenseits des Hypes Vermögen aufbauen</strong></p>
+
+        <div class="form-group">
+          <label for="customerName">Dein Name</label>
+          <input type="text" id="customerName" placeholder="Max Mustermann" />
+        </div>
+
+        <div class="form-group">
+          <label for="customerEmail">Deine E-Mail-Adresse</label>
+          <input type="email" id="customerEmail" placeholder="name@email.de" />
+        </div>
+
+        <button id="startCheckoutBtn" class="btn btn-gold full-width">Jetzt sicher mit Stripe bezahlen</button>
+        <a href="ebook3.html" class="btn btn-outline full-width" style="margin-top: 12px;">Zurück zur Produktseite</a>
+
+        <p id="checkoutMessage" class="form-message" style="margin-top:16px;"></p>
+      </section>
+
+      <aside class="card">
+        <img src="images/ebook-3.jpg" alt="Ebook 3" />
+        <p style="margin-top:16px;"><strong>Produkt:</strong> Ebook 3</p>
+        <p class="price">19,90 €</p>
+        <p>Sichere Zahlung über Stripe Checkout.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 MyFinIQ</div>
+  </footer>
+
+  <script>
+    document.getElementById("startCheckoutBtn").addEventListener("click", async () => {
+      const customerName = document.getElementById("customerName").value.trim();
+      const customerEmail = document.getElementById("customerEmail").value.trim();
+      const checkoutMessage = document.getElementById("checkoutMessage");
+
+      checkoutMessage.textContent = "";
+
+      if (!customerName || !customerEmail) {
+        checkoutMessage.textContent = "Bitte fülle alle Felder aus.";
+        checkoutMessage.style.color = "#9f1c1c";
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/create-ebook-checkout-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            orderId: "order_" + Date.now(),
+            productId: "ebook3",
+            customerEmail: customerEmail,
+            customerName: customerName
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Checkout konnte nicht erstellt werden.");
+        }
+
+        window.location.href = data.url;
+      } catch (error) {
+        console.error(error);
+        checkoutMessage.textContent = error.message || "Serverfehler beim Erstellen des Checkouts.";
+        checkoutMessage.style.color = "#9f1c1c";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elite Club – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #faf9f6; color: #222; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 40px 20px 60px; }
+    .hero { text-align: center; margin-bottom: 28px; }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 12px; }
+    .hero p { max-width: 760px; margin: 0 auto; color: #555; }
+    .status-box { background: #fff; border: 1px solid #eee; border-radius: 18px; padding: 22px; margin-bottom: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
+    .module-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .module-card { background: #fff; border: 1px solid #eee; border-radius: 20px; padding: 26px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .module-card h2 { margin-top: 0; margin-bottom: 12px; font-size: 1.5rem; }
+    .module-card p { color: #555; line-height: 1.7; }
+    .lesson-list { margin: 16px 0 20px; padding-left: 20px; }
+    .lesson-list li { margin-bottom: 8px; }
+    .open-btn { display: inline-block; background: linear-gradient(135deg, #d4af37, #b8860b); color: #fff; border-radius: 12px; padding: 12px 18px; font-weight: 700; text-decoration: none; }
+    .site-footer { background: #111827; color: #fff; text-align: center; padding: 18px 20px; margin-top: 50px; }
+    .hidden { display: none !important; }
+    @media (max-width: 900px) { .module-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2.2rem; } }
+  </style>
+</head>
+<body data-page="elite-club" data-required-plan="elite">
+  <main class="container">
+    <section class="hero">
+      <div class="hero-kicker">ELITE Bereich</div>
+      <h1>Willkommen im Elite Club</h1>
+      <p>Hier findest du exklusive Strategien, Analysen und zusätzliche Premium-Inhalte.</p>
+    </section>
+
+    <section class="status-box">
+      <strong>Status:</strong>
+      <span id="moduleStatus">Prüfe Zugriff ...</span>
+    </section>
+
+    <section id="protectedModuleContent" class="module-grid hidden">
+      <article class="module-card">
+        <h2>Elite Modul 1 – Strategie Briefing</h2>
+        <p>Vertiefte Struktur für deinen Vermögensaufbau und strategische Prioritäten.</p>
+        <ul class="lesson-list">
+          <li>Strategische Zielsetzung</li>
+          <li>Priorisierung</li>
+          <li>Mehrjahresplanung</li>
+        </ul>
+        <a href="elite-modul-1.html" class="open-btn">Modul öffnen</a>
+      </article>
+
+      <article class="module-card">
+        <h2>Elite Modul 2 – Marktgedanken</h2>
+        <p>Exklusive Marktbetrachtungen und Einordnung langfristiger Chancen.</p>
+        <ul class="lesson-list">
+          <li>Marktphasen verstehen</li>
+          <li>Chancen bewerten</li>
+          <li>Entscheidungslogik</li>
+        </ul>
+        <a href="elite-modul-2.html" class="open-btn">Modul öffnen</a>
+      </article>
+
+      <article class="module-card">
+        <h2>Elite Modul 3 – Deep Dives</h2>
+        <p>Vertiefungen zu ETFs, Aktienauswahl und Strukturfragen.</p>
+        <ul class="lesson-list">
+          <li>ETF-Vertiefung</li>
+          <li>Aktien systematisch prüfen</li>
+          <li>Cashflow-Ideen</li>
+        </ul>
+        <a href="elite-modul-3.html" class="open-btn">Modul öffnen</a>
+      </article>
+
+      <article class="module-card">
+        <h2>Elite Modul 4 – Bonusbereich</h2>
+        <p>Bonusmaterialien und exklusive Inhalte für ELITE-Mitglieder.</p>
+        <ul class="lesson-list">
+          <li>Bonusmaterial</li>
+          <li>Zusatzstrategien</li>
+          <li>Exklusiver Mehrwert</li>
+        </ul>
+        <a href="elite-modul-4.html" class="open-btn">Modul öffnen</a>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">© 2026 MyFinIQ</footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="header.js"></script>
+  <script src="access-control.js"></script>
+</body>
+</html>

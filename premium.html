@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upgrade – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="premium">
+  <main class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Upgrade</span>
+        <h1>Wähle deine Mitgliedschaft</h1>
+        <p>Schalte jetzt deine PRO- oder ELITE-Inhalte frei.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="card">
+          <h2>PRO</h2>
+          <p>Perfekt für strukturierten Vermögensaufbau mit allen PRO-Modulen.</p>
+          <span class="price">29,00 € / Monat</span>
+          <button id="upgradeProBtn" class="btn btn-gold full-width">PRO kaufen</button>
+        </article>
+
+        <article class="card">
+          <h2>ELITE</h2>
+          <p>Zusätzliche Premium-Inhalte, Deep Dives und exklusive Strategiebereiche.</p>
+          <span class="price">49,00 € / Monat</span>
+          <button id="upgradeEliteBtn" class="btn btn-gold full-width">ELITE kaufen</button>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 MyFinIQ</div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="header.js"></script>
+
+  <script>
+    async function createPlanCheckout(plan) {
+      const user = firebase.auth().currentUser;
+
+      if (!user) {
+        alert("Bitte logge dich zuerst ein.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        const response = await fetch("/create-checkout-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+            plan: plan
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Serverfehler beim Erstellen des Checkouts.");
+        }
+
+        window.location.href = data.url;
+      } catch (error) {
+        console.error(error);
+        alert(error.message || "Serverfehler beim Erstellen des Checkouts.");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("upgradeProBtn").addEventListener("click", () => createPlanCheckout("pro"));
+      document.getElementById("upgradeEliteBtn").addEventListener("click", () => createPlanCheckout("elite"));
+    });
+  </script>
+</body>
+</html>

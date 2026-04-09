@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exklusives Angebot – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="buecher">
+  <main class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Exklusives Angebot</span>
+        <h1>Hol dir jetzt das komplette 3er-Bundle</h1>
+        <p>Nur direkt nach deinem Kauf verfügbar.</p>
+      </div>
+
+      <div class="card" style="max-width: 760px; margin: 0 auto;">
+        <p class="price-old">59,70 € im Einzelkauf</p>
+        <p class="price">49,95 €</p>
+        <p>Du sparst 9,75 € und sicherst dir alle drei E-Books in einem Paket.</p>
+
+        <button id="buyUpsellBtn" class="btn btn-gold full-width">Bundle jetzt zusätzlich sichern</button>
+        <p id="upsellMessage" class="form-message" style="margin-top:16px;"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 MyFinIQ</div>
+  </footer>
+
+  <script>
+    document.getElementById("buyUpsellBtn").addEventListener("click", async () => {
+      const upsellMessage = document.getElementById("upsellMessage");
+
+      try {
+        const response = await fetch("/api/create-upsell-checkout-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({})
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Upsell-Checkout konnte nicht erstellt werden.");
+        }
+
+        window.location.href = data.url;
+      } catch (error) {
+        console.error(error);
+        upsellMessage.textContent = error.message || "Das Upsell konnte nicht geladen werden.";
+        upsellMessage.style.color = "#9f1c1c";
+      }
+    });
+  </script>
+</body>
+</html>

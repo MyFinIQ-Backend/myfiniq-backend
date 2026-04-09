@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danke – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf9f6;
+      color: #222;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 50px 20px 60px;
+      text-align: center;
+    }
+
+    .thankyou-box,
+    .offer-box,
+    .next-box {
+      background: #fff;
+      border-radius: 22px;
+      border: 1px solid #eee;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      margin-bottom: 14px;
+      color: #111;
+    }
+
+    p {
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .highlight {
+      color: #8b6b00;
+      font-weight: 700;
+    }
+
+    .btn-gold,
+    .btn-outline {
+      display: inline-block;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-weight: 700;
+      text-decoration: none;
+      margin: 6px;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: white;
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+
+    .site-footer {
+      background: #111827;
+      color: #fff;
+      text-align: center;
+      padding: 18px;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+
+<body data-page="leadmagnet">
+  <main class="container">
+    <section class="thankyou-box">
+      <h1>Danke <span id="leadNameText">dir</span>!</h1>
+      <p>
+        Dein kostenloser Guide wurde für dich vorgemerkt.
+        Du bist jetzt einen wichtigen Schritt weiter auf dem Weg zu einem
+        klaren und strukturierten Vermögensaufbau.
+      </p>
+    </section>
+
+    <section class="next-box">
+      <h2>Dein nächster sinnvoller Schritt</h2>
+      <p>
+        Der Guide gibt dir die Grundlage. Wenn du danach nicht nur wissen,
+        sondern auch <span class="highlight">systematisch umsetzen</span> möchtest,
+        ist der PRO-Bereich der richtige nächste Schritt.
+      </p>
+      <p>
+        Dort bekommst du strukturierte Module zu:
+        finanzielle Klarheit, Börsengrundlagen, ETF-Strategie, KI für Investoren,
+        passive Einkommen und dein Vermögenssystem.
+      </p>
+    </section>
+
+    <section class="offer-box">
+      <h2>Starte mit MyFinIQ PRO oder ELITE</h2>
+      <p>
+        Nutze die Inhalte nicht nur oberflächlich, sondern arbeite mit einem
+        echten System, das dich Schritt für Schritt begleitet.
+      </p>
+
+      <div style="margin-top: 18px;">
+        <a href="premium.html" class="btn-gold">Jetzt Upgrade ansehen</a>
+        <a href="kurse.html" class="btn-outline">Erst Kursübersicht ansehen</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 MyFinIQ
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="header.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get("name");
+      const leadNameText = document.getElementById("leadNameText");
+
+      if (name && leadNameText) {
+        leadNameText.textContent = name;
+      }
+    });
+  </script>
+</body>
+</html>

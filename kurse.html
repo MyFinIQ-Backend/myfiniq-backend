@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kurse – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="kurse">
+  <main class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Kurse</span>
+        <h1>MyFinIQ Vermögenssystem</h1>
+        <p>Hier findest du dein zentrales Premium-Kursangebot.</p>
+      </div>
+
+      <div class="pricing-card card">
+        <div>
+          <span class="eyebrow">Hauptprodukt</span>
+          <h2>MyFinIQ Vermögenssystem</h2>
+          <p>
+            Der zentrale Premium-Kurs deiner Plattform. Schritt für Schritt von finanzieller
+            Klarheit bis zur langfristigen Vermögensstrategie.
+          </p>
+
+          <div class="card" style="margin-top: 18px;">
+            <h3>Modul 1: Finanzielle Klarheit</h3>
+            <p>Ausgangslage erfassen, Ziele definieren und eine saubere Sparlogik entwickeln.</p>
+          </div>
+
+          <div class="card" style="margin-top: 18px;">
+            <h3>Modul 2: Grundlagen der Börse</h3>
+            <p>Aktien, ETFs, Indizes, Risiko und Rendite verständlich einordnen.</p>
+          </div>
+
+          <div class="card" style="margin-top: 18px;">
+            <h3>Modul 3: ETF-Strategie</h3>
+            <p>Ein einfaches, robustes ETF-System für langfristigen Vermögensaufbau.</p>
+          </div>
+        </div>
+
+        <div class="price-box">
+          <span class="price-label">Mitgliedschaft & Zugriff</span>
+          <span class="price">ab 29,00 € / Monat</span>
+          <p>
+            Wähle deinen Zugang zu MyFinIQ. PRO schaltet alle 6 PRO-Module frei.
+            ELITE erweitert deinen Zugang zusätzlich um exklusive ELITE-Module und Bonusinhalte.
+          </p>
+
+          <div class="actions">
+            <button id="buyProBtn" class="btn btn-gold full-width">PRO kaufen</button>
+            <button id="buyEliteBtn" class="btn btn-gold full-width">ELITE kaufen</button>
+            <a href="premium.html" class="btn btn-outline full-width">Zur Upgrade-Seite</a>
+            <a href="pro-kurse.html" class="btn btn-outline full-width">PRO-Kursbereich ansehen</a>
+            <a href="elite-club.html" class="btn btn-outline full-width">ELITE-Bereich ansehen</a>
+          </div>
+
+          <p class="helper-text" style="margin-top: 16px;">
+            Hinweis: Du musst eingeloggt sein, damit dein Kauf deinem Benutzerkonto zugeordnet wird.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 MyFinIQ</div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="header.js"></script>
+
+  <script>
+    async function createPlanCheckout(plan) {
+      const user = firebase.auth().currentUser;
+
+      if (!user) {
+        alert("Bitte logge dich zuerst ein.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        const response = await fetch("/create-checkout-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+            plan: plan
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Serverfehler beim Erstellen des Checkouts.");
+        }
+
+        window.location.href = data.url;
+      } catch (error) {
+        console.error(error);
+        alert(error.message || "Serverfehler beim Erstellen des Checkouts.");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("buyProBtn").addEventListener("click", () => createPlanCheckout("pro"));
+      document.getElementById("buyEliteBtn").addEventListener("click", () => createPlanCheckout("elite"));
+    });
+  </script>
+</body>
+</html>

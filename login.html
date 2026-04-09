@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf9f6;
+      color: #222;
+    }
+
+    .container.auth-container {
+      max-width: 520px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .login-card {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      border: 1px solid #eee;
+      padding: 34px 28px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 2.2rem;
+      color: #111;
+    }
+
+    .intro {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .btn-gold {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      margin-top: 8px;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .btn-gold:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .site-footer {
+      background: #111827;
+      color: #fff;
+      text-align: center;
+      padding: 18px 20px;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body data-page="login">
+  <main class="container auth-container">
+    <section class="login-card">
+      <div class="kicker">Mitgliederbereich</div>
+      <h1>Willkommen zurück</h1>
+      <p class="intro">
+        Logge dich ein, um auf dein Dashboard, deine PRO-Module, deinen ELITE-Bereich
+        und deinen Premium-Status zuzugreifen.
+      </p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">E-Mail-Adresse</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="deine@email.de"
+            autocomplete="email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Passwort</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Dein Passwort"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn-gold" id="loginBtn">
+          Jetzt einloggen
+        </button>
+      </form>
+
+      <div class="helper-links">
+        <a href="registrieren.html">Noch kein Konto? Jetzt registrieren</a>
+        <a href="premium.html">Zu den Premium-Plänen</a>
+      </div>
+
+      <div id="messageBox" class="message"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 MyFinIQ
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="header.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDrB2NHBUbAJR3khsk9iSqssAAECCjJXck",
+      authDomain: "myfiniq-35b18.firebaseapp.com",
+      projectId: "myfiniq-35b18",
+      storageBucket: "myfiniq-35b18.firebasestorage.app",
+      messagingSenderId: "363921791846",
+      appId: "1:363921791846:web:cdddb7b9194daf8930106a7"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .catch((error) => {
+        console.error("Persistence-Fehler:", error);
+      });
+
+    const loginForm = document.getElementById("loginForm");
+    const loginBtn = document.getElementById("loginBtn");
+    const messageBox = document.getElementById("messageBox");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    function showMessage(text, type = "error") {
+      messageBox.textContent = text;
+      messageBox.className = `message show ${type}`;
+    }
+
+    function clearMessage() {
+      messageBox.textContent = "";
+      messageBox.className = "message";
+    }
+
+    function setLoading(isLoading) {
+      loginBtn.disabled = isLoading;
+      loginBtn.textContent = isLoading ? "Login läuft ..." : "Jetzt einloggen";
+    }
+
+    function getReadableFirebaseError(errorCode) {
+      switch (errorCode) {
+        case "auth/invalid-email":
+          return "Die E-Mail-Adresse ist ungültig.";
+        case "auth/user-disabled":
+          return "Dieses Benutzerkonto wurde deaktiviert.";
+        case "auth/user-not-found":
+          return "Es wurde kein Benutzer mit dieser E-Mail-Adresse gefunden.";
+        case "auth/wrong-password":
+        case "auth/invalid-credential":
+          return "E-Mail oder Passwort ist nicht korrekt.";
+        case "auth/too-many-requests":
+          return "Zu viele Versuche. Bitte warte einen Moment und versuche es erneut.";
+        default:
+          return "Login fehlgeschlagen. Bitte prüfe deine Eingaben.";
+      }
+    }
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        window.location.href = "dashboard.html";
+      }
+    });
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearMessage();
+      setLoading(true);
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        showMessage("Bitte fülle alle Felder aus.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        showMessage("Login erfolgreich. Du wirst weitergeleitet ...", "success");
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        console.error("Login-Fehler:", error);
+        showMessage(getReadableFirebaseError(error.code), "error");
+      }
+
+      setLoading(false);
+    });
+  </script>
+</body>
+</html>

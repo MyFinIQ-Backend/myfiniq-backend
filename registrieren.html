@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registrieren – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf9f6;
+      color: #222;
+    }
+
+    .container.auth-container {
+      max-width: 560px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .register-card {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      border: 1px solid #eee;
+      padding: 34px 28px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 2.2rem;
+      color: #111;
+    }
+
+    .intro {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .btn-gold {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      margin-top: 8px;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .btn-gold:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .site-footer {
+      background: #111827;
+      color: #fff;
+      text-align: center;
+      padding: 18px 20px;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body data-page="registrieren">
+  <main class="container auth-container">
+    <section class="register-card">
+      <div class="kicker">Neues Mitglied</div>
+      <h1>Jetzt kostenlos registrieren</h1>
+      <p class="intro">
+        Erstelle dein MyFinIQ-Konto und starte direkt mit deinem persönlichen Dashboard.
+        Danach kannst du PRO oder ELITE freischalten und sofort die Module nutzen.
+      </p>
+
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Dein Name"
+            autocomplete="name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-Mail-Adresse</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="deine@email.de"
+            autocomplete="email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Passwort</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Mindestens 6 Zeichen"
+            autocomplete="new-password"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Passwort wiederholen</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Passwort erneut eingeben"
+            autocomplete="new-password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn-gold" id="registerBtn">
+          Jetzt registrieren
+        </button>
+      </form>
+
+      <div class="hint-box">
+        Nach der Registrierung wirst du automatisch eingeloggt und direkt zu deinem Dashboard weitergeleitet.
+      </div>
+
+      <div class="helper-links">
+        <a href="login.html">Schon ein Konto? Jetzt einloggen</a>
+        <a href="premium.html">Zu den Premium-Plänen</a>
+      </div>
+
+      <div id="messageBox" class="message"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 MyFinIQ
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="header.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDrB2NHBUbAJR3khsk9iSqssAAECCjJXck",
+      authDomain: "myfiniq-35b18.firebaseapp.com",
+      projectId: "myfiniq-35b18",
+      storageBucket: "myfiniq-35b18.firebasestorage.app",
+      messagingSenderId: "363921791846",
+      appId: "1:363921791846:web:cdddb7b9194daf8930106a7"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const db = firebase.firestore();
+
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .catch((error) => {
+        console.error("Persistence-Fehler:", error);
+      });
+
+    const registerForm = document.getElementById("registerForm");
+    const registerBtn = document.getElementById("registerBtn");
+    const messageBox = document.getElementById("messageBox");
+
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+
+    function showMessage(text, type = "error") {
+      messageBox.textContent = text;
+      messageBox.className = `message show ${type}`;
+    }
+
+    function clearMessage() {
+      messageBox.textContent = "";
+      messageBox.className = "message";
+    }
+
+    function setLoading(isLoading) {
+      registerBtn.disabled = isLoading;
+      registerBtn.textContent = isLoading ? "Registrierung läuft ..." : "Jetzt registrieren";
+    }
+
+    function getReadableFirebaseError(errorCode) {
+      switch (errorCode) {
+        case "auth/email-already-in-use":
+          return "Diese E-Mail-Adresse wird bereits verwendet.";
+        case "auth/invalid-email":
+          return "Die E-Mail-Adresse ist ungültig.";
+        case "auth/weak-password":
+          return "Das Passwort ist zu schwach. Bitte wähle mindestens 6 Zeichen.";
+        case "auth/network-request-failed":
+          return "Netzwerkfehler. Bitte prüfe deine Verbindung.";
+        default:
+          return "Registrierung fehlgeschlagen. Bitte versuche es erneut.";
+      }
+    }
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        window.location.href = "dashboard.html";
+      }
+    });
+
+    registerForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearMessage();
+      setLoading(true);
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      if (!name || !email || !password || !confirmPassword) {
+        showMessage("Bitte fülle alle Felder aus.");
+        setLoading(false);
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage("Das Passwort muss mindestens 6 Zeichen lang sein.");
+        setLoading(false);
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showMessage("Die beiden Passwörter stimmen nicht überein.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+        if (userCredential.user) {
+          await userCredential.user.updateProfile({
+            displayName: name
+          });
+
+          await db.collection("users").doc(userCredential.user.uid).set({
+            email: email,
+            displayName: name,
+            plan: "free",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+        }
+
+        showMessage("Registrierung erfolgreich. Du wirst weitergeleitet ...", "success");
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        console.error("Registrierungs-Fehler:", error);
+        showMessage(getReadableFirebaseError(error.code), "error");
+      }
+
+      setLoading(false);
+    });
+  </script>
+</body>
+</html>

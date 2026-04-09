@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Checkout – Ebook 1 | MyFinIQ</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="buecher">
+<main class="section">
+<div class="container pricing-card">
+<section class="card">
+<h1>Checkout – Ebook 1</h1>
+<p>
+Du kaufst jetzt das E-Book:
+<strong>
+Intelligent Geld investieren: Warum 90% der Menschen falsch investieren –
+und wie du es ab heute besser machst
+</strong>
+</p>
+
+<div class="form-group">
+<label for="customerName">Dein Name</label>
+<input
+type="text"
+id="customerName"
+placeholder="Max Mustermann"
+value="Sascha Rehm"
+/>
+</div>
+
+<div class="form-group">
+<label for="customerEmail">Deine E-Mail-Adresse</label>
+<input
+type="email"
+id="customerEmail"
+placeholder="name@email.de"
+value="s.rehm79@web.de"
+/>
+</div>
+
+<button id="startCheckoutBtn" class="btn btn-gold full-width">
+Jetzt sicher mit Stripe bezahlen
+</button>
+
+<a
+href="ebook1.html"
+class="btn btn-outline full-width"
+style="margin-top: 12px;"
+>
+Zurück zur Produktseite
+</a>
+
+<p id="checkoutMessage" class="form-message" style="margin-top:16px;"></p>
+</section>
+
+<aside class="card">
+<img src="images/ebook-1.jpg" alt="Ebook 1" />
+<p style="margin-top:16px;"><strong>Produkt:</strong> Ebook 1</p>
+<p class="price">19,90 €</p>
+<p>Sichere Zahlung über Stripe Checkout.</p>
+</aside>
+</div>
+</main>
+
+<footer class="site-footer">
+<div class="container">© 2026 MyFinIQ</div>
+</footer>
+
+<script>
+const API_BASE_URL = "https://myfiniq-backend.onrender.com";
+
+const startCheckoutBtn = document.getElementById("startCheckoutBtn");
+const customerNameInput = document.getElementById("customerName");
+const customerEmailInput = document.getElementById("customerEmail");
+const checkoutMessage = document.getElementById("checkoutMessage");
+
+startCheckoutBtn.addEventListener("click", async () => {
+const customerName = customerNameInput.value.trim();
+const customerEmail = customerEmailInput.value.trim();
+
+checkoutMessage.textContent = "";
+checkoutMessage.style.color = "#9f1c1c";
+startCheckoutBtn.disabled = true;
+startCheckoutBtn.textContent = "Weiterleitung läuft...";
+
+if (!customerName || !customerEmail) {
+checkoutMessage.textContent = "Bitte fülle alle Felder aus.";
+startCheckoutBtn.disabled = false;
+startCheckoutBtn.textContent = "Jetzt sicher mit Stripe bezahlen";
+return;
+}
+
+try {
+const response = await fetch(`${API_BASE_URL}/api/create-ebook-checkout-session`, {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+orderId: `order_${Date.now()}`,
+productId: "ebook1",
+customerEmail: customerEmail,
+customerName: customerName
+})
+});
+
+const contentType = response.headers.get("content-type") || "";
+let data;
+
+if (contentType.includes("application/json")) {
+data = await response.json();
+} else {
+const text = await response.text();
+throw new Error(
+"Das Backend hat keine gültige JSON-Antwort geliefert. Antwort: " +
+text.substring(0, 120)
+);
+}
+
+if (!response.ok) {
+throw new Error(data.error || "Checkout konnte nicht erstellt werden.");
+}
+
+if (!data.url) {
+throw new Error("Keine Checkout-URL vom Backend erhalten.");
+}
+
+window.location.href = data.url;
+} catch (error) {
+console.error("Checkout-Fehler:", error);
+checkoutMessage.textContent =
+error.message || "Serverfehler beim Erstellen des Checkouts.";
+checkoutMessage.style.color = "#9f1c1c";
+startCheckoutBtn.disabled = false;
+startCheckoutBtn.textContent = "Jetzt sicher mit Stripe bezahlen";
+}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+.env
+serviceAccountKey.json
+myfiniq-backend/.env
+myfiniq-backend/serviceAccountKey.json
+node_modules/

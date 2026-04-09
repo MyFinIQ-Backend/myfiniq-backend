@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zahlung erfolgreich – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="buecher">
+  <main class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Zahlung erfolgreich</span>
+        <h1>Vielen Dank für deinen Kauf</h1>
+        <p id="successStatus">Deine Zahlung wird geprüft und dein Download vorbereitet ...</p>
+      </div>
+
+      <div class="card">
+        <h2>Deine Downloads</h2>
+        <div id="downloadList"></div>
+        <p id="successMessage" class="form-message" style="margin-top:16px;"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 MyFinIQ</div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get("session_id");
+      const successStatus = document.getElementById("successStatus");
+      const successMessage = document.getElementById("successMessage");
+      const downloadList = document.getElementById("downloadList");
+
+      if (!sessionId) {
+        successStatus.textContent = "Keine gültige Stripe-Session gefunden.";
+        successMessage.textContent = "Bitte öffne die Seite nur nach einer erfolgreichen Zahlung.";
+        successMessage.style.color = "#9f1c1c";
+        return;
+      }
+
+      try {
+        const sessionResponse = await fetch(`/api/checkout-session/${encodeURIComponent(sessionId)}`);
+        const sessionData = await sessionResponse.json();
+
+        if (!sessionResponse.ok) {
+          throw new Error(sessionData.error || "Checkout-Session konnte nicht geladen werden.");
+        }
+
+        const deliveryResponse = await fetch(`/api/ebook-delivery/${encodeURIComponent(sessionId)}`);
+        const deliveryData = await deliveryResponse.json();
+
+        if (!deliveryResponse.ok) {
+          throw new Error(deliveryData.error || "Download konnte nicht vorbereitet werden.");
+        }
+
+        successStatus.textContent = `Deine Zahlung für "${deliveryData.productTitle}" war erfolgreich.`;
+
+        if (deliveryData.downloads && deliveryData.downloads.length) {
+          downloadList.innerHTML = deliveryData.downloads.map((item) => {
+            return `
+              <div class="card" style="margin-top:16px;">
+                <strong>${item.label}</strong>
+                <p>Dein Download steht jetzt bereit.</p>
+                <a href="${item.url}" class="btn btn-gold">Jetzt herunterladen</a>
+              </div>
+            `;
+          }).join("");
+        }
+
+        successMessage.textContent = "Deine Downloads wurden erfolgreich geladen.";
+        successMessage.style.color = "#166534";
+      } catch (error) {
+        console.error(error);
+        successStatus.textContent = "Die Erfolgsseite konnte nicht vollständig geladen werden.";
+        successMessage.textContent = error.message || "Es ist ein Fehler aufgetreten.";
+        successMessage.style.color = "#9f1c1c";
+      }
+    });
+  </script>
+</body>
+</html>

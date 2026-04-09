@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tools – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf9f6;
+      color: #222;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin: 0 0 12px;
+      color: #111;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 760px;
+      color: #555;
+      line-height: 1.6;
+      font-size: 1.08rem;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .tool-card {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      border: 1px solid #eee;
+      padding: 28px;
+    }
+
+    .tool-card h3 {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 1.4rem;
+    }
+
+    .tool-card p {
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .tool-badge {
+      display: inline-block;
+      background: #f3e6a5;
+      color: #6f5600;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .info-box {
+      margin-top: 34px;
+      background: #fffdf5;
+      border: 1px solid #f0e2a5;
+      border-radius: 18px;
+      padding: 24px;
+      color: #5b4700;
+      line-height: 1.7;
+    }
+
+    .site-footer {
+      background: #111827;
+      color: #fff;
+      text-align: center;
+      padding: 18px 20px;
+      margin-top: 50px;
+    }
+
+    .btn-gold {
+      display: inline-block;
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      background: #fff;
+      color: #333;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body data-page="tools">
+  <main class="container">
+    <section class="hero">
+      <div class="hero-kicker">Werkzeuge</div>
+      <h1>Deine MyFinIQ Tools</h1>
+      <p>
+        Nutze praktische Werkzeuge, um deine Finanzen klarer zu strukturieren,
+        deine Sparlogik zu verbessern und deinen Vermögensaufbau einfacher zu planen.
+      </p>
+    </section>
+
+    <section class="tool-grid">
+      <article class="tool-card">
+        <div class="tool-badge">FREE</div>
+        <h3>Sparplan-Rechner</h3>
+        <p>
+          Berechne, wie sich regelmäßige Sparraten über die Jahre entwickeln können
+          und bekomme ein besseres Gefühl für den Effekt von Zeit und Disziplin.
+        </p>
+        <a href="kurse.html" class="btn-outline">Mehr erfahren</a>
+      </article>
+
+      <article class="tool-card">
+        <div class="tool-badge">FREE</div>
+        <h3>Vermögens-Planer</h3>
+        <p>
+          Strukturiere Ziele, Zeithorizont und Sparraten in einem logischen System,
+          damit aus Wünschen konkrete Zahlen werden.
+        </p>
+        <a href="kurse.html" class="btn-outline">Mehr erfahren</a>
+      </article>
+
+      <article class="tool-card">
+        <div class="tool-badge">PRO / ELITE</div>
+        <h3>Strategie-Tools</h3>
+        <p>
+          Erweiterte Denk- und Analysehilfen für Nutzer, die ihre Investmentstrategie
+          tiefer ausarbeiten und systematisch verbessern möchten.
+        </p>
+        <a href="premium.html" class="btn-gold">Upgrade ansehen</a>
+      </article>
+    </section>
+
+    <section class="info-box">
+      <strong>Hinweis:</strong><br />
+      Die öffentlichen Tools geben dir eine gute Grundlage. Mit einer PRO- oder ELITE-Mitgliedschaft
+      bekommst du zusätzlich strukturierte Module, vertiefte Strategien und erweiterte Inhalte,
+      die dir helfen, dein Finanzsystem konsequent auszubauen.
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 MyFinIQ
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="header.js"></script>
+</body>
+</html>

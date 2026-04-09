@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kostenloser Finanzguide – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf9f6;
+      color: #222;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 50px 20px 60px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 16px;
+      color: #111;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .guide-box {
+      background: #fff;
+      border-radius: 22px;
+      border: 1px solid #eee;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+
+    .guide-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #111;
+    }
+
+    .guide-desc {
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .benefits {
+      text-align: left;
+      margin-bottom: 24px;
+      padding-left: 18px;
+    }
+
+    .benefits li {
+      margin-bottom: 10px;
+      color: #444;
+    }
+
+    .form-box {
+      display: grid;
+      gap: 12px;
+    }
+
+    input {
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      border-color: #b8860b;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.12);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-gold:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 10px;
+      min-height: 24px;
+      font-size: 0.95rem;
+    }
+
+    .footer-note {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .site-footer {
+      background: #111827;
+      color: #fff;
+      text-align: center;
+      padding: 18px;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+
+<body data-page="leadmagnet">
+  <main class="container">
+    <section class="hero">
+      <h1>Starte jetzt deinen Vermögensaufbau</h1>
+      <p>
+        Sichere dir kostenlos den Guide:
+        <strong>„Die 7 größten Fehler beim Vermögensaufbau“</strong>
+        und erfahre, wie du typische Anfängerfehler vermeidest.
+      </p>
+    </section>
+
+    <section class="guide-box">
+      <div class="guide-title">
+        Kostenloser Finanzguide
+      </div>
+
+      <div class="guide-desc">
+        In diesem Guide lernst du:
+      </div>
+
+      <ul class="benefits">
+        <li>Warum viele Menschen falsch investieren</li>
+        <li>Die größten Denkfehler beim Vermögensaufbau</li>
+        <li>Wie du mit ETFs strukturiert startest</li>
+        <li>Warum Zeit wichtiger ist als Timing</li>
+        <li>Wie du dir ein klares Finanzsystem aufbaust</li>
+      </ul>
+
+      <div class="form-box">
+        <input type="text" id="leadName" placeholder="Dein Name" autocomplete="name" />
+        <input type="email" id="leadEmail" placeholder="Deine E-Mail-Adresse" autocomplete="email" />
+
+        <button class="btn-gold" id="leadBtn">
+          Kostenlosen Guide sichern
+        </button>
+
+        <div id="leadMessage" class="message"></div>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      Kein Spam. Du kannst dich später jederzeit wieder abmelden.
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 MyFinIQ
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="header.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDrB2NHBUbAJR3khsk9iSqssAAECCjJXck",
+      authDomain: "myfiniq-35b18.firebaseapp.com",
+      projectId: "myfiniq-35b18",
+      storageBucket: "myfiniq-35b18.firebasestorage.app",
+      messagingSenderId: "363921791846",
+      appId: "1:363921791846:web:cdddb7b9194daf8930106a7"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const db = firebase.firestore();
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const nameInput = document.getElementById("leadName");
+      const emailInput = document.getElementById("leadEmail");
+      const btn = document.getElementById("leadBtn");
+      const message = document.getElementById("leadMessage");
+
+      function showMessage(text, color) {
+        message.textContent = text;
+        message.style.color = color;
+      }
+
+      btn.addEventListener("click", async function () {
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+
+        if (!name || !email) {
+          showMessage("Bitte alle Felder ausfüllen.", "#9f1c1c");
+          return;
+        }
+
+        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        if (!valid) {
+          showMessage("Ungültige E-Mail-Adresse.", "#9f1c1c");
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = "Wird gespeichert ...";
+
+        try {
+          await db.collection("leads").add({
+            name: name,
+            email: email,
+            source: "leadmagnet",
+            status: "new",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+          showMessage("Danke! Dein Guide wird vorbereitet...", "#166534");
+
+          setTimeout(() => {
+            window.location.href = `danke.html?name=${encodeURIComponent(name)}`;
+          }, 1200);
+        } catch (error) {
+          console.error("Fehler beim Speichern des Leads:", error);
+          showMessage("Der Lead konnte nicht gespeichert werden. Bitte versuche es erneut.", "#9f1c1c");
+          btn.disabled = false;
+          btn.textContent = "Kostenlosen Guide sichern";
+          return;
+        }
+
+        nameInput.value = "";
+        emailInput.value = "";
+        nameInput.blur();
+        emailInput.blur();
+      });
+    });
+  </script>
+</body>
+</html>

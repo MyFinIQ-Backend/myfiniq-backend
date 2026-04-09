@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zahlung abgebrochen – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .cancel-page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 50px 20px 70px;
+    }
+
+    .cancel-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .cancel-card,
+    .retry-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 24px;
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.05);
+      padding: 32px 26px;
+    }
+
+    .cancel-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #fff4f4;
+      border: 1px solid #efcaca;
+      color: #9f1c1c;
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .retry-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #fffdf5;
+      border: 1px solid #f0e2a5;
+      color: #8a5a00;
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .cancel-card h1,
+    .retry-card h2 {
+      margin: 0 0 14px;
+      color: #111;
+    }
+
+    .cancel-card h1 {
+      font-size: 2.2rem;
+    }
+
+    .retry-card h2 {
+      font-size: 1.7rem;
+      line-height: 1.3;
+    }
+
+    .lead-text {
+      color: #555;
+      line-height: 1.75;
+      font-size: 1.02rem;
+      margin-bottom: 18px;
+    }
+
+    .info-box {
+      margin-top: 22px;
+      background: #faf9f6;
+      border: 1px solid #eee;
+      border-radius: 18px;
+      padding: 20px;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    .benefits-list {
+      margin: 18px 0 0;
+      padding-left: 20px;
+      color: #444;
+      line-height: 1.8;
+    }
+
+    .retry-card p {
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .btn-gold,
+    .btn-outline,
+    .btn-dark {
+      display: inline-block;
+      border-radius: 12px;
+      padding: 14px 20px;
+      text-decoration: none;
+      font-weight: 700;
+      margin: 6px;
+      box-sizing: border-box;
+      cursor: pointer;
+      border: none;
+      text-align: center;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: #fff;
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+
+    .btn-dark {
+      width: 100%;
+      background: #111827;
+      color: #fff;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .btn-dark:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .action-row {
+      margin-top: 22px;
+    }
+
+    .retry-message {
+      min-height: 24px;
+      margin-top: 14px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .small-note {
+      margin-top: 18px;
+      color: #666;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .cancel-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .cancel-card h1 {
+        font-size: 1.9rem;
+      }
+
+      .retry-card h2 {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
+</head>
+<body data-page="buecher">
+  <main class="cancel-page">
+    <div class="cancel-layout">
+      <section class="cancel-card">
+        <div class="cancel-badge">Zahlung nicht abgeschlossen</div>
+        <h1>Dein Kauf wurde noch nicht beendet</h1>
+
+        <p class="lead-text">
+          Keine Sorge — deine Zahlung wurde abgebrochen oder nicht vollständig abgeschlossen.
+          Es wurde nichts endgültig für dich freigeschaltet.
+        </p>
+
+        <p class="lead-text">
+          Du kannst den Kauf jetzt sofort erneut starten und dir dein E-Book in wenigen Sekunden sichern.
+        </p>
+
+        <div class="info-box">
+          <strong>Was bedeutet das?</strong>
+          <ul class="benefits-list">
+            <li>Deine Zahlung wurde nicht erfolgreich abgeschlossen</li>
+            <li>Dein Download wurde deshalb noch nicht freigegeben</li>
+            <li>Du kannst den Kauf direkt jetzt erneut starten</li>
+          </ul>
+        </div>
+
+        <div class="action-row">
+          <a href="buecher.html" class="btn-outline">Zurück zur Bücherseite</a>
+          <a href="index.html" class="btn-outline">Zur Startseite</a>
+        </div>
+      </section>
+
+      <aside class="retry-card">
+        <div class="retry-badge">Direkt erneut versuchen</div>
+        <h2 id="retryTitle">Deinen Kauf jetzt erneut starten</h2>
+
+        <p id="retryText">
+          Wähle einfach erneut dein gewünschtes E-Book oder sichere dir direkt das Bundle mit Preisvorteil.
+        </p>
+
+        <button id="retryButton" class="btn-dark">
+          Kauf erneut starten
+        </button>
+
+        <div id="retryMessage" class="retry-message"></div>
+
+        <p class="small-note">
+          Du kannst alternativ auch direkt auf die Buchübersicht zurückgehen und dort ein anderes Produkt wählen.
+        </p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">© 2026 MyFinIQ</footer>
+
+  <script src="header.js"></script>
+  <script>
+    const PRODUCT_CONFIG = {
+      ebook1: {
+        title: "E-Book 1 erneut kaufen",
+        text: "Starte den Kauf für „Intelligent Geld investieren: Warum 90% der Menschen falsch investieren – und wie du es ab heute besser machst“ jetzt erneut.",
+        page: "checkout-ebook1.html"
+      },
+      ebook2: {
+        title: "E-Book 2 erneut kaufen",
+        text: "Starte den Kauf für „Intelligent Geld investieren – Strategien, die wirklich funktionieren“ jetzt erneut.",
+        page: "checkout-ebook2.html"
+      },
+      ebook3: {
+        title: "E-Book 3 erneut kaufen",
+        text: "Starte den Kauf für „Die stille KI-Revolution“ jetzt erneut.",
+        page: "checkout-ebook3.html"
+      },
+      bundle3: {
+        title: "Bundle erneut kaufen",
+        text: "Starte den Kauf für dein 3er-Bundle jetzt erneut und sichere dir alle drei E-Books mit Preisvorteil.",
+        page: "checkout-bundle.html"
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get("productId") || "";
+
+      const retryTitle = document.getElementById("retryTitle");
+      const retryText = document.getElementById("retryText");
+      const retryButton = document.getElementById("retryButton");
+      const retryMessage = document.getElementById("retryMessage");
+
+      const config = PRODUCT_CONFIG[productId] || null;
+
+      if (config) {
+        retryTitle.textContent = config.title;
+        retryText.textContent = config.text;
+
+        retryButton.addEventListener("click", () => {
+          retryMessage.textContent = "Weiterleitung wird vorbereitet ...";
+          retryMessage.style.color = "#8a5a00";
+          window.location.href = config.page;
+        });
+      } else {
+        retryTitle.textContent = "Zur passenden Buchseite zurück";
+        retryText.textContent =
+          "Das ursprüngliche Produkt konnte nicht eindeutig erkannt werden. Du kannst jetzt zur Bücherübersicht zurückgehen und dein gewünschtes Produkt erneut wählen.";
+
+        retryButton.textContent = "Zur Bücherübersicht";
+        retryButton.addEventListener("click", () => {
+          retryMessage.textContent = "Weiterleitung wird vorbereitet ...";
+          retryMessage.style.color = "#8a5a00";
+          window.location.href = "buecher.html";
+        });
+      }
+    });
+  </script>
+</body>
+</html>

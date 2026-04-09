@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upgrade – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-protected="true">
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="logo">MyFinIQ</a>
+      <button class="nav-toggle" id="navToggle">☰</button>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">Start</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="kurse.html">Kurse</a>
+        <a href="tools.html">Tools</a>
+        <a href="upgrade.html" class="active">Upgrade</a>
+        <a href="#" id="logoutBtn" class="btn btn-small btn-gold">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero dashboard-hero">
+      <div class="container">
+        <span class="eyebrow">Upgrade</span>
+        <h1>Wähle deinen MyFinIQ Plan</h1>
+        <p id="upgradeHint">Hier kannst du deinen Plan auswählen und freischalten.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="plan-status-box card">
+          <span class="plan-label">Aktueller Status</span>
+          <div id="planBadge" class="plan-badge plan-free">Free</div>
+          <p id="planText">Dein aktueller Plan: Free</p>
+        </div>
+
+        <div class="pricing-grid">
+          <div class="card pricing-tier">
+            <h2>Free</h2>
+            <p class="tier-price">0 €</p>
+            <ul class="check-list">
+              <li>Login & Dashboard</li>
+              <li>Grundfunktionen</li>
+              <li>Öffentliche Inhalte</li>
+            </ul>
+            <button id="selectFree" class="btn btn-outline full-width">Free wählen</button>
+          </div>
+
+          <div class="card pricing-tier featured-tier">
+            <h2>Pro</h2>
+            <p class="tier-price">29,00 € / Monat</p>
+            <ul class="check-list">
+              <li>Premium-Kurse</li>
+              <li>Zusätzliche Tools</li>
+              <li>Mehr Finanzinhalte</li>
+            </ul>
+            <button id="selectPro" class="btn btn-gold full-width">Pro aktivieren</button>
+          </div>
+
+          <div class="card pricing-tier">
+            <h2>Elite</h2>
+            <p class="tier-price">59,00 € / Monat</p>
+            <ul class="check-list">
+              <li>Elite-Club</li>
+              <li>Exklusive Inhalte</li>
+              <li>Voller Zugriff</li>
+            </ul>
+            <button id="selectElite" class="btn btn-gold full-width">Elite aktivieren</button>
+          </div>
+        </div>
+
+        <p id="upgradeMessage" class="form-message"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>© 2026 MyFinIQ</span>
+    </div>
+  </footer>
+
+  <script type="module" src="auth.js"></script>
+  <script type="module" src="plans.js"></script>
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lead-Übersicht – MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf9f6;
+      color: #222;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin: 0 0 12px;
+      color: #111;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .status-box {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 18px;
+      padding: 20px 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+      margin-bottom: 24px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .toolbar select,
+    .toolbar input {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+
+    .export-btn {
+      border: none;
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: white;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .export-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .table-wrap {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #f1f1f1;
+      vertical-align: top;
+    }
+
+    th {
+      background: #fafafa;
+      color: #333;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .badge-neu {
+      background: #f3e6a5;
+      color: #6f5600;
+    }
+
+    .badge-kontaktieren {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .badge-kunde {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .small-btn {
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #333;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .small-btn:hover {
+      background: #fafafa;
+    }
+
+    .small-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .delete-btn {
+      border: 1px solid #efcaca;
+      background: #fff4f4;
+      color: #9f1c1c;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background: #ffeaea;
+    }
+
+    .delete-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .note-box {
+      display: grid;
+      gap: 8px;
+    }
+
+    .note-box textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      font-size: 0.92rem;
+      font-family: Arial, sans-serif;
+      background: #fff;
+      box-sizing: border-box;
+    }
+
+    .note-box textarea:focus {
+      outline: none;
+      border-color: #b8860b;
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.12);
+    }
+
+    .note-save-btn {
+      justify-self: start;
+      border: none;
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: #fff;
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .note-save-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .note-meta {
+      font-size: 0.82rem;
+      color: #777;
+      line-height: 1.5;
+    }
+
+    .empty-box {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 22px;
+      padding: 28px;
+      text-align: center;
+      color: #666;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .site-footer {
+      background: #111827;
+      color: #fff;
+      text-align: center;
+      padding: 18px 20px;
+      margin-top: 50px;
+    }
+
+    @media (max-width: 900px) {
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 1460px;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body data-page="dashboard">
+  <main class="container">
+    <section class="hero">
+      <div class="hero-kicker">Admin / Übersicht</div>
+      <h1>Lead-Übersicht</h1>
+      <p>
+        Hier siehst du alle Leads, kannst ihren Status ändern, Notizen speichern,
+        Leads löschen und die gefilterte Übersicht als CSV exportieren.
+      </p>
+    </section>
+
+    <section class="status-box">
+      <strong>Status:</strong>
+      <span id="leadStatus">Prüfe Login und lade Leads ...</span>
+    </section>
+
+    <section class="toolbar">
+      <input type="text" id="searchInput" placeholder="Nach Name oder E-Mail suchen" />
+      <select id="statusFilter">
+        <option value="alle">Alle Status</option>
+        <option value="neu">Neu</option>
+        <option value="kontaktieren">Kontaktieren</option>
+        <option value="kunde">Kunde</option>
+      </select>
+      <button id="exportCsvBtn" class="export-btn">CSV exportieren</button>
+    </section>
+
+    <section id="emptyState" class="empty-box hidden">
+      Es wurden noch keine Leads gefunden.
+    </section>
+
+    <section id="leadTableWrap" class="table-wrap hidden">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>E-Mail</th>
+            <th>Quelle</th>
+            <th>Status</th>
+            <th>Erstellt am</th>
+            <th>Status ändern</th>
+            <th>Notiz</th>
+            <th>Löschen</th>
+          </tr>
+        </thead>
+        <tbody id="leadTableBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 MyFinIQ
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="header.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDrB2NHBUbAJR3khsk9iSqssAAECCjJXck",
+      authDomain: "myfiniq-35b18.firebaseapp.com",
+      projectId: "myfiniq-35b18",
+      storageBucket: "myfiniq-35b18.firebasestorage.app",
+      messagingSenderId: "363921791846",
+      appId: "1:363921791846:web:cdddb7b9194daf8930106a7"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const db = firebase.firestore();
+
+    const leadStatus = document.getElementById("leadStatus");
+    const leadTableBody = document.getElementById("leadTableBody");
+    const leadTableWrap = document.getElementById("leadTableWrap");
+    const emptyState = document.getElementById("emptyState");
+    const searchInput = document.getElementById("searchInput");
+    const statusFilter = document.getElementById("statusFilter");
+    const exportCsvBtn = document.getElementById("exportCsvBtn");
+
+    let allLeads = [];
+
+    function formatDate(timestamp) {
+      if (!timestamp) return "-";
+
+      try {
+        const date = timestamp.toDate();
+        return new Intl.DateTimeFormat("de-DE", {
+          dateStyle: "medium",
+          timeStyle: "short"
+        }).format(date);
+      } catch (error) {
+        return "-";
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function getBadgeClass(status) {
+      if (status === "kontaktieren") return "badge badge-kontaktieren";
+      if (status === "kunde") return "badge badge-kunde";
+      return "badge badge-neu";
+    }
+
+    function getFilteredLeads() {
+      const searchValue = searchInput.value.trim().toLowerCase();
+      const filterValue = statusFilter.value;
+
+      return allLeads.filter((lead) => {
+        const name = (lead.name || "").toLowerCase();
+        const email = (lead.email || "").toLowerCase();
+        const status = (lead.status || "neu").toLowerCase();
+
+        const matchesSearch =
+          !searchValue ||
+          name.includes(searchValue) ||
+          email.includes(searchValue);
+
+        const matchesStatus =
+          filterValue === "alle" || status === filterValue;
+
+        return matchesSearch && matchesStatus;
+      });
+    }
+
+    async function updateLeadStatus(docId, newStatus) {
+      try {
+        leadStatus.textContent = `Aktualisiere Lead-Status auf "${newStatus}" ...`;
+
+        await db.collection("leads").doc(docId).set(
+          {
+            status: newStatus,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          },
+          { merge: true }
+        );
+
+        const lead = allLeads.find((item) => item.id === docId);
+        if (lead) {
+          lead.status = newStatus;
+        }
+
+        renderLeads();
+        leadStatus.textContent = `Status aktualisiert: ${newStatus}`;
+      } catch (error) {
+        console.error("Fehler beim Aktualisieren des Lead-Status:", error);
+        leadStatus.textContent = "Der Lead-Status konnte nicht aktualisiert werden.";
+      }
+    }
+
+    async function saveLeadNote(docId) {
+      const textarea = document.getElementById(`note-${docId}`);
+      const saveButton = document.getElementById(`save-${docId}`);
+
+      if (!textarea || !saveButton) return;
+
+      const noteText = textarea.value.trim();
+
+      try {
+        saveButton.disabled = true;
+        saveButton.textContent = "Speichert ...";
+        leadStatus.textContent = "Notiz wird gespeichert ...";
+
+        await db.collection("leads").doc(docId).set(
+          {
+            note: noteText,
+            noteUpdatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          },
+          { merge: true }
+        );
+
+        const lead = allLeads.find((item) => item.id === docId);
+        if (lead) {
+          lead.note = noteText;
+          lead.noteUpdatedAt = {
+            toDate: () => new Date()
+          };
+        }
+
+        renderLeads();
+        leadStatus.textContent = "Notiz gespeichert.";
+      } catch (error) {
+        console.error("Fehler beim Speichern der Notiz:", error);
+        leadStatus.textContent = "Die Notiz konnte nicht gespeichert werden.";
+      } finally {
+        saveButton.disabled = false;
+        saveButton.textContent = "Notiz speichern";
+      }
+    }
+
+    async function deleteLead(docId) {
+      const lead = allLeads.find((item) => item.id === docId);
+      const leadName = lead?.name || "diesen Lead";
+
+      const confirmed = window.confirm(
+        `Möchtest du ${leadName} wirklich endgültig löschen?`
+      );
+
+      if (!confirmed) {
+        return;
+      }
+
+      try {
+        leadStatus.textContent = "Lead wird gelöscht ...";
+
+        await db.collection("leads").doc(docId).delete();
+
+        allLeads = allLeads.filter((item) => item.id !== docId);
+
+        renderLeads();
+        leadStatus.textContent = "Lead erfolgreich gelöscht.";
+      } catch (error) {
+        console.error("Fehler beim Löschen des Leads:", error);
+        leadStatus.textContent = "Der Lead konnte nicht gelöscht werden.";
+      }
+    }
+
+    function toCsvValue(value) {
+      const safe = String(value ?? "").replaceAll('"', '""');
+      return `"${safe}"`;
+    }
+
+    function exportFilteredLeadsToCsv() {
+      const filteredLeads = getFilteredLeads();
+
+      if (filteredLeads.length === 0) {
+        leadStatus.textContent = "Es gibt keine Leads zum Exportieren.";
+        return;
+      }
+
+      const header = [
+        "Name",
+        "E-Mail",
+        "Quelle",
+        "Status",
+        "Erstellt am",
+        "Notiz",
+        "Notiz zuletzt gespeichert"
+      ];
+
+      const rows = filteredLeads.map((lead) => [
+        lead.name || "",
+        lead.email || "",
+        lead.source || "",
+        lead.status || "neu",
+        formatDate(lead.createdAt),
+        lead.note || "",
+        formatDate(lead.noteUpdatedAt)
+      ]);
+
+      const csvContent = [
+        header.map(toCsvValue).join(";"),
+        ...rows.map((row) => row.map(toCsvValue).join(";"))
+      ].join("\n");
+
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+
+      const now = new Date();
+      const fileName = `myfiniq-leads-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}.csv`;
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      leadStatus.textContent = `${filteredLeads.length} Lead(s) als CSV exportiert.`;
+    }
+
+    function renderLeads() {
+      const filtered = getFilteredLeads();
+
+      if (filtered.length === 0) {
+        leadTableBody.innerHTML = "";
+        leadTableWrap.classList.add("hidden");
+        emptyState.classList.remove("hidden");
+        emptyState.textContent = allLeads.length === 0
+          ? "Es wurden noch keine Leads gefunden."
+          : "Keine Leads für den aktuellen Filter gefunden.";
+        exportCsvBtn.disabled = true;
+        return;
+      }
+
+      let rows = "";
+
+      filtered.forEach((lead) => {
+        const safeStatus = escapeHtml(lead.status || "neu");
+        const safeNote = escapeHtml(lead.note || "");
+        const noteUpdatedAtText = lead.noteUpdatedAt
+          ? `Zuletzt gespeichert: ${escapeHtml(formatDate(lead.noteUpdatedAt))}`
+          : "Noch keine Notiz gespeichert.";
+
+        rows += `
+          <tr>
+            <td>${escapeHtml(lead.name || "-")}</td>
+            <td>${escapeHtml(lead.email || "-")}</td>
+            <td>${escapeHtml(lead.source || "-")}</td>
+            <td><span class="${getBadgeClass(lead.status || "neu")}">${safeStatus}</span></td>
+            <td>${escapeHtml(formatDate(lead.createdAt))}</td>
+            <td>
+              <div class="status-actions">
+                <button class="small-btn" onclick="window.changeLeadStatus('${lead.id}', 'neu')">Neu</button>
+                <button class="small-btn" onclick="window.changeLeadStatus('${lead.id}', 'kontaktieren')">Kontaktieren</button>
+                <button class="small-btn" onclick="window.changeLeadStatus('${lead.id}', 'kunde')">Kunde</button>
+              </div>
+            </td>
+            <td>
+              <div class="note-box">
+                <textarea id="note-${lead.id}" placeholder="Notiz zu diesem Lead eingeben ...">${safeNote}</textarea>
+                <button id="save-${lead.id}" class="note-save-btn" onclick="window.saveLeadNote('${lead.id}')">Notiz speichern</button>
+                <div class="note-meta">${noteUpdatedAtText}</div>
+              </div>
+            </td>
+            <td>
+              <button class="delete-btn" onclick="window.removeLead('${lead.id}')">
+                Lead löschen
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+
+      leadTableBody.innerHTML = rows;
+      emptyState.classList.add("hidden");
+      leadTableWrap.classList.remove("hidden");
+      exportCsvBtn.disabled = false;
+    }
+
+    async function loadLeads() {
+      try {
+        const snapshot = await db
+          .collection("leads")
+          .orderBy("createdAt", "desc")
+          .get();
+
+        if (snapshot.empty) {
+          allLeads = [];
+          leadStatus.textContent = "Eingeloggt – keine Leads gefunden.";
+          renderLeads();
+          return;
+        }
+
+        allLeads = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        leadStatus.textContent = `Eingeloggt – ${snapshot.size} Lead(s) geladen.`;
+        renderLeads();
+      } catch (error) {
+        console.error("Fehler beim Laden der Leads:", error);
+        leadStatus.textContent = "Die Leads konnten nicht geladen werden.";
+        emptyState.classList.remove("hidden");
+        emptyState.textContent = "Fehler beim Laden der Leads.";
+        leadTableWrap.classList.add("hidden");
+        exportCsvBtn.disabled = true;
+      }
+    }
+
+    window.changeLeadStatus = async function (docId, newStatus) {
+      await updateLeadStatus(docId, newStatus);
+    };
+
+    window.saveLeadNote = async function (docId) {
+      await saveLeadNote(docId);
+    };
+
+    window.removeLead = async function (docId) {
+      await deleteLead(docId);
+    };
+
+    searchInput.addEventListener("input", renderLeads);
+    statusFilter.addEventListener("change", renderLeads);
+    exportCsvBtn.addEventListener("click", exportFilteredLeadsToCsv);
+
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (!user) {
+        leadStatus.textContent = "Nicht eingeloggt. Weiterleitung zur Login-Seite ...";
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1200);
+        return;
+      }
+
+      await loadLeads();
+    });
+  </script>
+</body>
+</html>
