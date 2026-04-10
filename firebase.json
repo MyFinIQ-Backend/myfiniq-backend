@@ -1,16 +1,13 @@
 {
-"functions": {
-"source": "functions"
-},
-"hosting": {
-"public": ".",
-"ignore": [
-"firebase.json",
-".firebaserc",
-"**/.*",
-"**/node_modules/**",
-"myfiniq-backend/**",
-"functions/**"
-]
-}
+  "functions": {
+    "source": "functions"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
 }

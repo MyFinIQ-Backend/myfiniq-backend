@@ -1,104 +1,69 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dashboard | MyFinIQ</title>
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | MyFinIQ</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body data-protected="true">
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="logo">MyFinIQ</a>
+      <nav class="main-nav">
+        <a href="index.html">Start</a>
+        <a href="kurse.html">Kurse</a>
+        <a href="club.html">Club</a>
+        <a href="tools.html">Tools</a>
+        <a href="buecher.html">Bücher</a>
+        <a href="ueber.html">Über uns</a>
+        <a href="upgrade.html">Upgrade</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="#" id="logoutBtn" class="btn btn-outline">Logout</a>
+      </nav>
+    </div>
+  </header>
 
-<main class="section">
-<div class="container">
-<h1 style="text-align:center;">Willkommen zurück</h1>
-<p style="text-align:center;">Hier beginnt dein strukturierter Weg mit MyFinIQ.</p>
+  <main class="section">
+    <div class="container">
+      <div style="text-align:center; margin-bottom: 28px;">
+        <h1 id="welcomeTitle">Willkommen zurück</h1>
+        <p>Hier beginnt dein strukturierter Weg mit MyFinIQ.</p>
+      </div>
 
-<div class="grid-2" style="margin-top:30px;">
+      <div class="grid-2" style="margin-top:30px;">
+        <div class="card">
+          <h2>Mein Profil</h2>
+          <p><strong>Name:</strong> <span id="userName">Lädt...</span></p>
+          <p><strong>E-Mail:</strong> <span id="userEmail">Lädt...</span></p>
+          <p><strong>Plan:</strong> <span id="userPlan">Lädt...</span></p>
+        </div>
 
-<!-- Profil -->
-<div class="card">
-<h2>Mein Profil</h2>
-<p><strong>Name:</strong> <span id="userName">Lädt...</span></p>
-<p><strong>E-Mail:</strong> <span id="userEmail">Lädt...</span></p>
-<p><strong>Plan:</strong> <span id="userPlan">Lädt...</span></p>
-</div>
+        <div class="card">
+          <h2>Meine nächsten Schritte</h2>
+          <p>Entdecke deine Kurse oder gehe in den Premium-Bereich.</p>
+          <div style="margin-top:15px; display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="index.html" class="btn">Startseite</a>
+            <a href="kurse.html" class="btn btn-gold">Kurse</a>
+            <a href="premium.html" class="btn btn-outline">Premium</a>
+          </div>
+        </div>
+      </div>
 
-<!-- Navigation -->
-<div class="card">
-<h2>Meine nächsten Schritte</h2>
-<p>Entdecke deine Kurse oder gehe in den Premium-Bereich.</p>
+      <div class="card" style="margin-top:30px;">
+        <h2>PRO-Bereich</h2>
+        <p id="proText">Wird geladen...</p>
+        <a href="pro-kurse.html" class="btn">PRO öffnen</a>
+      </div>
 
-<div style="margin-top:15px;">
-<a href="index.html" class="btn">Startseite</a>
-<a href="kurse.html" class="btn btn-gold">Kurse</a>
-</div>
-</div>
+      <div class="card" style="margin-top:20px;">
+        <h2>ELITE-Bereich</h2>
+        <p id="eliteText">Wird geladen...</p>
+        <a href="elite-club.html" class="btn">ELITE öffnen</a>
+      </div>
+    </div>
+  </main>
 
-</div>
-
-<!-- PRO Bereich -->
-<div class="card" style="margin-top:30px;">
-<h2>PRO-Bereich</h2>
-<p id="proText">Wird geladen...</p>
-<a href="pro-kurse.html" class="btn">PRO öffnen</a>
-</div>
-
-<!-- ELITE Bereich -->
-<div class="card" style="margin-top:20px;">
-<h2>ELITE-Bereich</h2>
-<p id="eliteText">Wird geladen...</p>
-<a href="elite-club.html" class="btn">ELITE öffnen</a>
-</div>
-
-</div>
-</main>
-
-<script>
-const API_BASE_URL = "https://myfiniq-backend.onrender.com";
-
-// Beispiel: User-ID aus LocalStorage (falls vorhanden)
-const uid = localStorage.getItem("uid") || "test-user";
-
-async function loadUserData() {
-try {
-const response = await fetch(`${API_BASE_URL}/api/user-premium/${uid}`);
-const data = await response.json();
-
-const plan = data.plan || "free";
-
-document.getElementById("userName").textContent = "Sascha Rehm";
-document.getElementById("userEmail").textContent = "s.rehm79@web.de";
-document.getElementById("userPlan").textContent = plan.toUpperCase();
-
-// PRO Bereich
-if (plan === "pro" || plan === "elite") {
-document.getElementById("proText").textContent =
-"Du hast Zugriff auf alle PRO-Inhalte.";
-} else {
-document.getElementById("proText").textContent =
-"Upgrade auf PRO erforderlich.";
-}
-
-// ELITE Bereich
-if (plan === "elite") {
-document.getElementById("eliteText").textContent =
-"Du hast Zugriff auf alle ELITE-Inhalte.";
-} else {
-document.getElementById("eliteText").textContent =
-"Upgrade auf ELITE erforderlich.";
-}
-
-} catch (error) {
-console.error(error);
-
-document.getElementById("userPlan").textContent = "Fehler";
-document.getElementById("proText").textContent = "Fehler beim Laden.";
-document.getElementById("eliteText").textContent = "Fehler beim Laden.";
-}
-}
-
-loadUserData();
-</script>
-
+  <script type="module" src="auth.js"></script>
 </body>
 </html>

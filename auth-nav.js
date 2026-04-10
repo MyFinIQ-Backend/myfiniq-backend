@@ -1,70 +1,76 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyDrB2NHBUbAJR3khsk9iSqssAAECCjJXck",
-  authDomain: "myfiniq-35b18.firebaseapp.com",
-  projectId: "myfiniq-35b18",
-  storageBucket: "myfiniq-35b18.firebasestorage.app",
-  messagingSenderId: "363921791846",
-  appId: "1:363921791846:web:cdddb7b9194daf8930106a7"
-};
+import { auth } from "./firebase-config.js";
+import {
+onAuthStateChanged,
+signOut,
+setPersistence,
+browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-  .catch((error) => {
-    console.error("Persistence-Fehler:", error);
-  });
-
-function updateNavForAuth(user) {
-  const navLogin = document.getElementById("navLogin");
-  const navRegister = document.getElementById("navRegister");
-  const navDashboard = document.getElementById("navDashboard");
-  const navLogout = document.getElementById("navLogout");
-  const navUserLabel = document.getElementById("navUserLabel");
-
-  if (user) {
-    if (navLogin) navLogin.classList.add("hidden");
-    if (navRegister) navRegister.classList.add("hidden");
-    if (navDashboard) navDashboard.classList.remove("hidden");
-    if (navLogout) navLogout.classList.remove("hidden");
-
-    if (navUserLabel) {
-      const displayName = user.displayName || user.email || "Mitglied";
-      navUserLabel.textContent = `Hallo, ${displayName}`;
-      navUserLabel.classList.remove("hidden");
-    }
-  } else {
-    if (navLogin) navLogin.classList.remove("hidden");
-    if (navRegister) navRegister.classList.remove("hidden");
-    if (navDashboard) navDashboard.classList.add("hidden");
-    if (navLogout) navLogout.classList.add("hidden");
-
-    if (navUserLabel) {
-      navUserLabel.textContent = "";
-      navUserLabel.classList.add("hidden");
-    }
-  }
-}
-
-firebase.auth().onAuthStateChanged((user) => {
-  updateNavForAuth(user);
+document.addEventListener("DOMContentLoaded", async () => {
+await ensurePersistence();
+initNavigation();
+initAuthHeader();
+initLogout();
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const navLogout = document.getElementById("navLogout");
+async function ensurePersistence() {
+try {
+await setPersistence(auth, browserLocalPersistence);
+} catch (error) {
+console.error("Persistence-Fehler:", error);
+}
+}
 
-  if (navLogout) {
-    navLogout.addEventListener("click", async (event) => {
-      event.preventDefault();
+function initNavigation() {
+const navToggle = document.getElementById("navToggle");
+const mainNav = document.getElementById("mainNav");
 
-      try {
-        await firebase.auth().signOut();
-        window.location.href = "login.html";
-      } catch (error) {
-        console.error("Logout-Fehler:", error);
-        alert("Logout fehlgeschlagen.");
-      }
-    });
-  }
+if (navToggle && mainNav) {
+navToggle.addEventListener("click", () => {
+mainNav.classList.toggle("open");
 });
+}
+}
+
+function initAuthHeader() {
+const dashboardLinks = document.querySelectorAll('[data-auth="dashboard"]');
+const registerLinks = document.querySelectorAll('[data-auth="register"]');
+const loginLinks = document.querySelectorAll('[data-auth="login"]');
+const logoutLinks = document.querySelectorAll('[data-auth="logout"]');
+
+onAuthStateChanged(auth, (user) => {
+const isLoggedIn = !!user;
+
+dashboardLinks.forEach((el) => {
+el.style.display = isLoggedIn ? "" : "none";
+});
+
+logoutLinks.forEach((el) => {
+el.style.display = isLoggedIn ? "" : "none";
+});
+
+registerLinks.forEach((el) => {
+el.style.display = isLoggedIn ? "none" : "";
+});
+
+loginLinks.forEach((el) => {
+el.style.display = isLoggedIn ? "none" : "";
+});
+});
+}
+
+function initLogout() {
+document.querySelectorAll('[data-auth="logout"]').forEach((button) => {
+button.addEventListener("click", async (event) => {
+event.preventDefault();
+
+try {
+await signOut(auth);
+window.location.href = "login.html";
+} catch (error) {
+console.error("Logout-Fehler:", error);
+alert("Logout fehlgeschlagen.");
+}
+});
+});
+}

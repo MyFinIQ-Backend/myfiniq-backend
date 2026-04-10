@@ -3,16 +3,21 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence,
+  updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
   doc,
   setDoc,
-  getDoc
+  getDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  await initAuthPersistence();
   initNavigation();
   initRegisterForm();
   initLoginForm();
@@ -20,6 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
   protectPage();
   loadDashboardUser();
 });
+
+async function initAuthPersistence() {
+  try {
+    await setPersistence(auth, browserLocalPersistence);
+  } catch (error) {
+    console.error("Fehler bei der Auth-Persistence:", error);
+  }
+}
 
 function initNavigation() {
   const navToggle = document.getElementById("navToggle");
@@ -40,20 +53,16 @@ function initRegisterForm() {
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    message.textContent = "";
 
     const formData = new FormData(form);
-    const name = String(formData.get("name")).trim();
-    const email = String(formData.get("email")).trim();
-    const password = String(formData.get("password"));
-    const confirmPassword = String(formData.get("confirmPassword"));
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const password = String(formData.get("password") || "");
+    const confirmPassword = String(formData.get("confirmPassword") || "");
 
     if (!name || !email || !password || !confirmPassword) {
       message.textContent = "Bitte alle Felder ausfüllen.";
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      message.textContent = "Die Passwörter stimmen nicht überein.";
       return;
     }
 
@@ -62,24 +71,41 @@ function initRegisterForm() {
       return;
     }
 
+    if (password !== confirmPassword) {
+      message.textContent = "Die Passwörter stimmen nicht überein.";
+      return;
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      await setDoc(doc(db, "users", user.uid), {
-        name: name,
-        email: email,
-        plan: "Free",
-        createdAt: new Date().toISOString()
+      await updateProfile(user, {
+        displayName: name
       });
 
-      message.textContent = "Registrierung erfolgreich. Du wirst jetzt weitergeleitet.";
-      form.reset();
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          uid: user.uid,
+          name: name,
+          email: email,
+          plan: "free",
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        },
+        { merge: true }
+      );
+
+      localStorage.setItem("uid", user.uid);
+
+      message.textContent = "Registrierung erfolgreich. Du wirst weitergeleitet.";
 
       setTimeout(() => {
         window.location.href = "dashboard.html";
-      }, 1200);
+      }, 1000);
     } catch (error) {
+      console.error("Registrierungsfehler:", error);
       message.textContent = getFirebaseErrorMessage(error.code);
     }
   });
@@ -93,19 +119,30 @@ function initLoginForm() {
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    message.textContent = "";
 
     const formData = new FormData(form);
-    const email = String(formData.get("email")).trim();
-    const password = String(formData.get("password"));
+    const email = String(formData.get("email") || "").trim();
+    const password = String(formData.get("password") || "");
+
+    if (!email || !password) {
+      message.textContent = "Bitte E-Mail und Passwort eingeben.";
+      return;
+    }
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      localStorage.setItem("uid", user.uid);
+
       message.textContent = "Login erfolgreich. Dashboard wird geöffnet.";
 
       setTimeout(() => {
         window.location.href = "dashboard.html";
-      }, 900);
+      }, 800);
     } catch (error) {
+      console.error("Loginfehler:", error);
       message.textContent = getFirebaseErrorMessage(error.code);
     }
   });
@@ -119,9 +156,11 @@ function initLogout() {
     event.preventDefault();
 
     try {
+      localStorage.removeItem("uid");
       await signOut(auth);
       window.location.href = "login.html";
     } catch (error) {
+      console.error("Logout fehlgeschlagen:", error);
       alert("Logout fehlgeschlagen.");
     }
   });
@@ -142,17 +181,26 @@ function protectPage() {
       return;
     }
 
+    localStorage.setItem("uid", user.uid);
+
     if (isPremium) {
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
+      try {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
 
-      if (!userSnap.exists()) {
-        window.location.href = "dashboard.html";
-        return;
-      }
+        if (!userSnap.exists()) {
+          window.location.href = "dashboard.html";
+          return;
+        }
 
-      const userData = userSnap.data();
-      if (userData.plan !== "Pro" && userData.plan !== "Elite") {
+        const userData = userSnap.data();
+        const plan = String(userData.plan || "free").toLowerCase();
+
+        if (plan !== "pro" && plan !== "elite") {
+          window.location.href = "dashboard.html";
+        }
+      } catch (error) {
+        console.error("Fehler bei Premium-Prüfung:", error);
         window.location.href = "dashboard.html";
       }
     }
@@ -164,26 +212,61 @@ function loadDashboardUser() {
   const userEmail = document.getElementById("userEmail");
   const userPlan = document.getElementById("userPlan");
   const welcomeTitle = document.getElementById("welcomeTitle");
+  const proText = document.getElementById("proText");
+  const eliteText = document.getElementById("eliteText");
 
-  if (!userName && !userEmail && !userPlan && !welcomeTitle) return;
+  if (!userName && !userEmail && !userPlan && !welcomeTitle && !proText && !eliteText) {
+    return;
+  }
 
   onAuthStateChanged(auth, async (user) => {
-    if (!user) return;
+    if (!user) {
+      return;
+    }
 
     try {
+      localStorage.setItem("uid", user.uid);
+
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
-      if (!userSnap.exists()) return;
+      let name = user.displayName || "Mitglied";
+      let email = user.email || "–";
+      let plan = "free";
 
-      const userData = userSnap.data();
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        name = userData.name || userData.displayName || name;
+        email = userData.email || email;
+        plan = String(userData.plan || "free").toLowerCase();
+      }
 
-      if (userName) userName.textContent = userData.name || "–";
-      if (userEmail) userEmail.textContent = userData.email || user.email || "–";
-      if (userPlan) userPlan.textContent = userData.plan || "Free";
-      if (welcomeTitle) welcomeTitle.textContent = `Willkommen zurück, ${userData.name}`;
+      if (userName) userName.textContent = name;
+      if (userEmail) userEmail.textContent = email;
+      if (userPlan) userPlan.textContent = plan.toUpperCase();
+      if (welcomeTitle) welcomeTitle.textContent = `Willkommen zurück, ${name}`;
+
+      if (proText) {
+        proText.textContent =
+          plan === "pro" || plan === "elite"
+            ? "Du hast Zugriff auf alle PRO-Inhalte."
+            : "Upgrade auf PRO erforderlich.";
+      }
+
+      if (eliteText) {
+        eliteText.textContent =
+          plan === "elite"
+            ? "Du hast Zugriff auf alle ELITE-Inhalte."
+            : "Upgrade auf ELITE erforderlich.";
+      }
     } catch (error) {
       console.error("Fehler beim Laden der Nutzerdaten:", error);
+
+      if (userName) userName.textContent = user.displayName || "–";
+      if (userEmail) userEmail.textContent = user.email || "–";
+      if (userPlan) userPlan.textContent = "FREE";
+      if (proText) proText.textContent = "Upgrade auf PRO erforderlich.";
+      if (eliteText) eliteText.textContent = "Upgrade auf ELITE erforderlich.";
     }
   });
 }
@@ -202,6 +285,8 @@ function getFirebaseErrorMessage(code) {
       return "Kein Nutzer mit dieser E-Mail gefunden.";
     case "auth/wrong-password":
       return "Das Passwort ist falsch.";
+    case "auth/too-many-requests":
+      return "Zu viele Versuche. Bitte warte kurz und versuche es erneut.";
     default:
       return "Es ist ein Fehler aufgetreten. Bitte versuche es erneut.";
   }

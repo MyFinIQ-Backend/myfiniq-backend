@@ -1,122 +1,82 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pro Kurse – MyFinIQ</title>
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #faf9f6; color: #222; }
-    .container { max-width: 1180px; margin: 0 auto; padding: 40px 20px 60px; }
-    .hero { text-align: center; margin-bottom: 28px; }
-    .hero h1 { font-size: 2.8rem; margin-bottom: 12px; }
-    .hero p { max-width: 760px; margin: 0 auto; color: #555; }
-    .status-box { background: #fff; border: 1px solid #eee; border-radius: 18px; padding: 22px; margin-bottom: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
-    .module-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .module-card { background: #fff; border: 1px solid #eee; border-radius: 20px; padding: 26px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-    .module-card h2 { margin-top: 0; margin-bottom: 12px; font-size: 1.5rem; }
-    .module-card p { color: #555; line-height: 1.7; }
-    .lesson-list { margin: 16px 0 20px; padding-left: 20px; }
-    .lesson-list li { margin-bottom: 8px; }
-    .open-btn { display: inline-block; background: linear-gradient(135deg, #d4af37, #b8860b); color: #fff; border-radius: 12px; padding: 12px 18px; font-weight: 700; text-decoration: none; }
-    .site-footer { background: #111827; color: #fff; text-align: center; padding: 18px 20px; margin-top: 50px; }
-    .hidden { display: none !important; }
-    @media (max-width: 900px) { .module-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2.2rem; } }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PRO Kurse | MyFinIQ</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="pro-kurse" data-required-plan="pro">
-  <main class="container">
-    <section class="hero">
-      <div class="hero-kicker">PRO Bereich</div>
-      <h1>Deine PRO Kurse</h1>
-      <p>Hier findest du alle 6 freigeschalteten PRO-Module für deinen strukturierten Vermögensaufbau.</p>
-    </section>
+<body data-premium="true">
+<header class="site-header">
+<div class="container nav-wrap">
+<a href="index.html" class="logo">MyFinIQ</a>
+<button class="nav-toggle" id="navToggle" aria-label="Menü öffnen">☰</button>
+<nav class="main-nav" id="mainNav">
+<a href="index.html">Start</a>
+<a href="kurse.html">Kurse</a>
+<a href="club.html">Club</a>
+<a href="tools.html">Tools</a>
+<a href="buecher.html">Bücher</a>
+<a href="ueber.html">Über uns</a>
+<a href="premium.html">Upgrade</a>
+<a href="dashboard.html" data-auth="dashboard" style="display:none;">Dashboard</a>
+<a href="registrieren.html" data-auth="register">Registrieren</a>
+<a href="login.html" class="btn btn-gold" data-auth="login">Login</a>
+<a href="#" class="btn btn-outline" data-auth="logout" style="display:none;">Logout</a>
+</nav>
+</div>
+</header>
 
-    <section class="status-box">
-      <strong>Status:</strong>
-      <span id="moduleStatus">Prüfe Zugriff ...</span>
-    </section>
+<main class="section">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">PRO Bereich</div>
+<h1>Deine PRO Kurse</h1>
+<p>Hier findest du alle 6 freigeschalteten PRO-Module für deinen strukturierten Vermögensaufbau.</p>
+</div>
 
-    <section id="protectedModuleContent" class="module-grid hidden">
-      <article class="module-card">
-        <h2>Modul 1 – Finanzielle Klarheit</h2>
-        <p>Lege die Grundlage für deinen Vermögensaufbau mit klaren Zielen und Struktur.</p>
-        <ul class="lesson-list">
-          <li>Ausgangslage analysieren</li>
-          <li>Ziele definieren</li>
-          <li>Geldfehler vermeiden</li>
-          <li>Sparlogik aufbauen</li>
-        </ul>
-        <a href="pro-modul-1.html" class="open-btn">Modul öffnen</a>
-      </article>
+<div class="card">
+<p id="proStatus">Status: Prüfe Zugriff ...</p>
+</div>
 
-      <article class="module-card">
-        <h2>Modul 2 – Grundlagen der Börse</h2>
-        <p>Verstehe Aktien, ETFs, Risiko, Rendite und langfristige Strategien.</p>
-        <ul class="lesson-list">
-          <li>Börse verstehen</li>
-          <li>Aktien, ETFs, Indizes</li>
-          <li>Investment vs. Spekulation</li>
-          <li>Emotionen kontrollieren</li>
-        </ul>
-        <a href="pro-modul-2.html" class="open-btn">Modul öffnen</a>
-      </article>
+<div class="grid-2" style="margin-top:30px;">
+<div class="card"><h3>Modul 1</h3><p>Finanzielle Klarheit</p></div>
+<div class="card"><h3>Modul 2</h3><p>Grundlagen der Börse</p></div>
+<div class="card"><h3>Modul 3</h3><p>ETF-Strategie</p></div>
+<div class="card"><h3>Modul 4</h3><p>Denkfehler vermeiden</p></div>
+<div class="card"><h3>Modul 5</h3><p>Strukturierter Aufbau</p></div>
+<div class="card"><h3>Modul 6</h3><p>Langfristige Strategie</p></div>
+</div>
+</div>
+</main>
 
-      <article class="module-card">
-        <h2>Modul 3 – ETF-Strategie</h2>
-        <p>Baue ein einfaches ETF-System für langfristigen Vermögensaufbau auf.</p>
-        <ul class="lesson-list">
-          <li>ETF-Auswahl</li>
-          <li>Weltportfolio</li>
-          <li>Sparplanhöhe</li>
-          <li>Rebalancing</li>
-        </ul>
-        <a href="pro-modul-3.html" class="open-btn">Modul öffnen</a>
-      </article>
+<footer class="site-footer"><div class="container">© 2026 MyFinIQ</div></footer>
 
-      <article class="module-card">
-        <h2>Modul 4 – KI für Investoren</h2>
-        <p>Nutze KI als Werkzeug für Struktur, Recherche und Analyse.</p>
-        <ul class="lesson-list">
-          <li>KI sinnvoll nutzen</li>
-          <li>Prompts für Analyse</li>
-          <li>Grenzen verstehen</li>
-          <li>Recherche strukturieren</li>
-        </ul>
-        <a href="pro-modul-4.html" class="open-btn">Modul öffnen</a>
-      </article>
+<script type="module" src="auth.js"></script>
+<script type="module">
+import { auth, db } from "./firebase-config.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      <article class="module-card">
-        <h2>Modul 5 – Passive Einkommen</h2>
-        <p>Verstehe, wie passives Einkommen über Zeit aufgebaut werden kann.</p>
-        <ul class="lesson-list">
-          <li>Dividenden vs. Entnahmeplan</li>
-          <li>Einkommensziele</li>
-          <li>Langfristige Hochrechnung</li>
-          <li>Fehler vermeiden</li>
-        </ul>
-        <a href="pro-modul-5.html" class="open-btn">Modul öffnen</a>
-      </article>
+const proStatus = document.getElementById("proStatus");
 
-      <article class="module-card">
-        <h2>Modul 6 – Dein Vermögenssystem</h2>
-        <p>Verbinde alles zu deinem persönlichen Finanzsystem.</p>
-        <ul class="lesson-list">
-          <li>Monatsprozess</li>
-          <li>Investitionsroutine</li>
-          <li>Fortschritt messen</li>
-          <li>Disziplin halten</li>
-        </ul>
-        <a href="pro-modul-6.html" class="open-btn">Modul öffnen</a>
-      </article>
-    </section>
-  </main>
+onAuthStateChanged(auth, async (user) => {
+if (!user) {
+proStatus.textContent = "Status: Nicht eingeloggt.";
+return;
+}
 
-  <footer class="site-footer">© 2026 MyFinIQ</footer>
+const snap = await getDoc(doc(db, "users", user.uid));
+const data = snap.exists() ? snap.data() : {};
+const plan = String(data.plan || "free").toLowerCase();
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="header.js"></script>
-  <script src="access-control.js"></script>
+if (plan === "pro" || plan === "elite") {
+proStatus.textContent = "Status: Zugriff freigeschaltet.";
+} else {
+proStatus.textContent = "Status: Upgrade auf PRO erforderlich.";
+}
+});
+</script>
+<script type="module" src="auth-nav.js"></script>
 </body>
 </html>

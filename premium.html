@@ -1,86 +1,143 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrade – MyFinIQ</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Upgrade | MyFinIQ</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="premium">
-  <main class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Upgrade</span>
-        <h1>Wähle deine Mitgliedschaft</h1>
-        <p>Schalte jetzt deine PRO- oder ELITE-Inhalte frei.</p>
-      </div>
+<body data-protected="true">
+<header class="site-header">
+<div class="container nav-wrap">
+<a href="index.html" class="logo">MyFinIQ</a>
 
-      <div class="pricing-grid">
-        <article class="card">
-          <h2>PRO</h2>
-          <p>Perfekt für strukturierten Vermögensaufbau mit allen PRO-Modulen.</p>
-          <span class="price">29,00 € / Monat</span>
-          <button id="upgradeProBtn" class="btn btn-gold full-width">PRO kaufen</button>
-        </article>
+<button class="nav-toggle" id="navToggle" aria-label="Menü öffnen">☰</button>
 
-        <article class="card">
-          <h2>ELITE</h2>
-          <p>Zusätzliche Premium-Inhalte, Deep Dives und exklusive Strategiebereiche.</p>
-          <span class="price">49,00 € / Monat</span>
-          <button id="upgradeEliteBtn" class="btn btn-gold full-width">ELITE kaufen</button>
-        </article>
-      </div>
-    </div>
-  </main>
+<nav class="main-nav" id="mainNav">
+<a href="index.html">Start</a>
+<a href="kurse.html">Kurse</a>
+<a href="club.html">Club</a>
+<a href="tools.html">Tools</a>
+<a href="buecher.html">Bücher</a>
+<a href="ueber.html">Über uns</a>
+<a href="premium.html" class="active">Upgrade</a>
+<a href="dashboard.html" data-auth="dashboard" style="display:none;">Dashboard</a>
+<a href="registrieren.html" data-auth="register">Registrieren</a>
+<a href="login.html" class="btn btn-gold" data-auth="login">Login</a>
+<a href="#" class="btn btn-outline" data-auth="logout" style="display:none;">Logout</a>
+</nav>
+</div>
+</header>
 
-  <footer class="site-footer">
-    <div class="container">© 2026 MyFinIQ</div>
-  </footer>
+<main class="section">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">Upgrade</div>
+<h1>Wähle deine Mitgliedschaft</h1>
+<p>Schalte jetzt deine PRO- oder ELITE-Inhalte frei.</p>
+</div>
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="firebase-config.js"></script>
-  <script src="header.js"></script>
+<div class="grid-2">
+<div class="card">
+<h2>PRO</h2>
+<p>Strukturierter Vermögensaufbau mit allen PRO-Modulen.</p>
+<div class="price">29,00 € / Monat</div>
+<button id="buyProBtn" class="btn btn-gold btn-full">PRO kaufen</button>
+</div>
 
-  <script>
-    async function createPlanCheckout(plan) {
-      const user = firebase.auth().currentUser;
+<div class="card">
+<h2>ELITE</h2>
+<p>Zusätzliche Premium-Inhalte, Deep Dives und exklusive Strategiebereiche.</p>
+<div class="price">59,00 € / Monat</div>
+<button id="buyEliteBtn" class="btn btn-gold btn-full">ELITE kaufen</button>
+</div>
+</div>
 
-      if (!user) {
-        alert("Bitte logge dich zuerst ein.");
-        window.location.href = "login.html";
-        return;
-      }
+<div id="premiumMessage" class="message" style="margin-top:18px;"></div>
+</div>
+</main>
 
-      try {
-        const response = await fetch("/create-checkout-session", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            uid: user.uid,
-            plan: plan
-          })
-        });
+<footer class="site-footer">
+<div class="container">© 2026 MyFinIQ</div>
+</footer>
 
-        const data = await response.json();
+<script type="module" src="auth-nav.js"></script>
 
-        if (!response.ok) {
-          throw new Error(data.error || "Serverfehler beim Erstellen des Checkouts.");
-        }
+<script type="module">
+import { auth, db } from "./firebase-config.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        window.location.href = data.url;
-      } catch (error) {
-        console.error(error);
-        alert(error.message || "Serverfehler beim Erstellen des Checkouts.");
-      }
-    }
+const API_BASE_URL = "https://myfiniq-backend.onrender.com";
+const messageBox = document.getElementById("premiumMessage");
+const buyProBtn = document.getElementById("buyProBtn");
+const buyEliteBtn = document.getElementById("buyEliteBtn");
 
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("upgradeProBtn").addEventListener("click", () => createPlanCheckout("pro"));
-      document.getElementById("upgradeEliteBtn").addEventListener("click", () => createPlanCheckout("elite"));
-    });
-  </script>
+function showMessage(text, type = "error") {
+messageBox.textContent = text;
+messageBox.className = `message show ${type}`;
+}
+
+async function startMembershipCheckout(plan) {
+const user = auth.currentUser;
+
+if (!user) {
+window.location.href = "login.html";
+return;
+}
+
+try {
+const response = await fetch(`${API_BASE_URL}/api/create-membership-checkout`, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+uid: user.uid,
+email: user.email || "",
+plan: plan
+})
+});
+
+const data = await response.json();
+
+if (!response.ok || !data.url) {
+throw new Error(data.error || "Checkout konnte nicht gestartet werden.");
+}
+
+window.location.href = data.url;
+} catch (error) {
+console.error("Stripe-Fehler:", error);
+showMessage("Fehler beim Starten des Stripe-Checkouts: " + error.message, "error");
+}
+}
+
+buyProBtn.addEventListener("click", () => startMembershipCheckout("pro"));
+buyEliteBtn.addEventListener("click", () => startMembershipCheckout("elite"));
+
+onAuthStateChanged(auth, async (user) => {
+if (!user) return;
+
+try {
+const snap = await getDoc(doc(db, "users", user.uid));
+if (!snap.exists()) return;
+
+const data = snap.data();
+const plan = String(data.plan || "free").toLowerCase();
+
+if (plan === "pro") {
+buyProBtn.textContent = "PRO freigeschaltet";
+buyProBtn.disabled = true;
+}
+
+if (plan === "elite") {
+buyProBtn.textContent = "PRO freigeschaltet";
+buyProBtn.disabled = true;
+buyEliteBtn.textContent = "ELITE freigeschaltet";
+buyEliteBtn.disabled = true;
+}
+} catch (error) {
+console.error(error);
+}
+});
+</script>
 </body>
 </html>

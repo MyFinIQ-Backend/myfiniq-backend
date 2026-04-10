@@ -1,313 +1,106 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Club – MyFinIQ</title>
-  <link rel="stylesheet" href="styles.css" />
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #faf9f6;
-      color: #222;
-    }
-
-    .container {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 40px 20px 60px;
-    }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 36px;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin: 0 0 12px;
-      color: #111;
-    }
-
-    .hero p {
-      margin: 0 auto;
-      max-width: 760px;
-      color: #555;
-      line-height: 1.6;
-      font-size: 1.08rem;
-    }
-
-    .membership-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 30px;
-    }
-
-    .membership-card {
-      background: #fff;
-      border-radius: 22px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      border: 1px solid #eee;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .membership-badge {
-      display: inline-block;
-      align-self: flex-start;
-      background: #f3e6a5;
-      color: #6f5600;
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-
-    .membership-card h2 {
-      margin-top: 0;
-      margin-bottom: 12px;
-      font-size: 1.7rem;
-    }
-
-    .membership-card p {
-      color: #555;
-      line-height: 1.7;
-      margin-bottom: 18px;
-    }
-
-    .feature-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 22px;
-      flex-grow: 1;
-    }
-
-    .feature-list li {
-      padding: 10px 0;
-      border-bottom: 1px solid #f1f1f1;
-      color: #333;
-      line-height: 1.5;
-    }
-
-    .feature-list li:last-child {
-      border-bottom: none;
-    }
-
-    .section-box {
-      margin-top: 34px;
-      background: #fff;
-      border: 1px solid #eee;
-      border-radius: 22px;
-      padding: 30px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-    }
-
-    .section-box h2 {
-      margin-top: 0;
-      margin-bottom: 14px;
-      font-size: 1.9rem;
-    }
-
-    .section-box p {
-      color: #555;
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .club-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .club-item {
-      background: #fafafa;
-      border: 1px solid #eee;
-      border-radius: 16px;
-      padding: 18px;
-    }
-
-    .club-item strong {
-      display: block;
-      margin-bottom: 8px;
-      color: #111;
-    }
-
-    .club-item span {
-      color: #666;
-      line-height: 1.6;
-      font-size: 0.96rem;
-    }
-
-    .cta-box {
-      margin-top: 34px;
-      background: #fffdf5;
-      border: 1px solid #f0e2a5;
-      border-radius: 22px;
-      padding: 28px;
-      text-align: center;
-      color: #5b4700;
-      line-height: 1.7;
-    }
-
-    .btn-gold {
-      display: inline-block;
-      background: linear-gradient(135deg, #d4af37, #b8860b);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .btn-outline {
-      display: inline-block;
-      background: #fff;
-      color: #333;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .site-footer {
-      background: #111827;
-      color: #fff;
-      text-align: center;
-      padding: 18px 20px;
-      margin-top: 50px;
-    }
-
-    @media (max-width: 900px) {
-      .membership-grid,
-      .club-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Club | MyFinIQ</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="club">
-  <main class="container">
-    <section class="hero">
-      <div class="hero-kicker">Mitgliedschaft</div>
-      <h1>Der MyFinIQ Club</h1>
-      <p>
-        Der Club ist der Bereich für kontinuierliche Entwicklung, strategische Vertiefung
-        und langfristigen Mehrwert. Je nach Mitgliedschaft erhältst du unterschiedliche
-        Zugänge zu Inhalten, Modulen und exklusiven Denkmodellen.
-      </p>
-    </section>
+<body>
+<header class="site-header">
+<div class="container nav-wrap">
+<a href="index.html" class="logo">MyFinIQ</a>
 
-    <section class="membership-grid">
-      <article class="membership-card">
-        <div class="membership-badge">FREE</div>
-        <h2>Grundlage</h2>
-        <p>
-          Für alle, die sich orientieren und einen ersten Einstieg in das MyFinIQ-System suchen.
-        </p>
-        <ul class="feature-list">
-          <li>Zugriff auf öffentliche Übersichtsseiten</li>
-          <li>Grundlagen, Bücher und allgemeine Inhalte</li>
-          <li>Orientierung im MyFinIQ-System</li>
-          <li>Möglichkeit zum Upgrade auf PRO oder ELITE</li>
-        </ul>
-        <a href="premium.html" class="btn-outline">Upgrade ansehen</a>
-      </article>
+<button class="nav-toggle" id="navToggle" aria-label="Menü öffnen">☰</button>
 
-      <article class="membership-card">
-        <div class="membership-badge">PRO</div>
-        <h2>Strukturierter Aufbau</h2>
-        <p>
-          Für Nutzer, die ihre Finanzbildung vertiefen und systematisch mit echten Modulen arbeiten wollen.
-        </p>
-        <ul class="feature-list">
-          <li>Zugriff auf alle 6 PRO-Module</li>
-          <li>ETF-Strategie, KI für Investoren und Vermögenssystem</li>
-          <li>Strukturierte Lerninhalte mit Praxisaufgaben</li>
-          <li>Direkte Nutzung des PRO-Kursbereichs</li>
-        </ul>
-        <a href="pro-kurse.html" class="btn-outline">PRO-Bereich ansehen</a>
-      </article>
+<nav class="main-nav" id="mainNav">
+<a href="index.html">Start</a>
+<a href="kurse.html">Kurse</a>
+<a href="club.html" class="active">Club</a>
+<a href="tools.html">Tools</a>
+<a href="buecher.html">Bücher</a>
+<a href="ueber.html">Über uns</a>
+<a href="premium.html">Upgrade</a>
+<a href="dashboard.html" data-auth="dashboard" style="display:none;">Dashboard</a>
+<a href="registrieren.html" data-auth="register">Registrieren</a>
+<a href="login.html" class="btn btn-gold" data-auth="login">Login</a>
+<a href="#" class="btn btn-outline" data-auth="logout" style="display:none;">Logout</a>
+</nav>
+</div>
+</header>
 
-      <article class="membership-card">
-        <div class="membership-badge">ELITE</div>
-        <h2>Maximale Vertiefung</h2>
-        <p>
-          Für Nutzer, die zusätzlich zu PRO exklusive Strategien, Bonusinhalte und Deep Dives nutzen möchten.
-        </p>
-        <ul class="feature-list">
-          <li>Alles aus PRO enthalten</li>
-          <li>Zugriff auf alle ELITE-Module</li>
-          <li>Strategie Briefings, Marktgedanken und Bonusbereich</li>
-          <li>Exklusiver Zugang zum ELITE-Club</li>
-        </ul>
-        <a href="elite-club.html" class="btn-outline">ELITE-Bereich ansehen</a>
-      </article>
-    </section>
+<main class="section">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">Club</div>
+<h1>Der MyFinIQ Club</h1>
+<p>
+Der Club soll dem Nutzer echten Mehrwert bieten. Deshalb findest du hier nicht nur
+eine Überschrift, sondern einen klaren Nutzen: Orientierung, Austausch,
+Umsetzungsimpulse und exklusive Inhalte für deinen Vermögensaufbau.
+</p>
+</div>
 
-    <section class="section-box">
-      <h2>Was den Club besonders macht</h2>
-      <p>
-        Der MyFinIQ Club ist nicht nur eine Sammlung von Informationen, sondern ein Bereich,
-        der dir helfen soll, deine Denkweise, deine Struktur und deinen langfristigen
-        Vermögensaufbau Schritt für Schritt zu verbessern.
-      </p>
-      <p>
-        Statt unübersichtlicher Einzeltipps bekommst du hier eine klare Logik:
-        erst verstehen, dann strukturieren, dann konsequent umsetzen.
-      </p>
+<div class="grid-3">
+<div class="card">
+<h3>Wöchentliche Markt-Impulse</h3>
+<p>Kurze verständliche Einordnungen, damit du Entwicklungen besser bewerten kannst.</p>
+</div>
+<div class="card">
+<h3>Monatliche Fokus-Themen</h3>
+<p>Jeden Monat ein Schwerpunkt, etwa ETFs, Dividenden, Risiko oder Psychologie.</p>
+</div>
+<div class="card">
+<h3>Strategie-Checklisten</h3>
+<p>Praktische Hilfen für Entscheidungen, Analyse und langfristige Disziplin.</p>
+</div>
+<div class="card">
+<h3>Exklusive Club-Inhalte</h3>
+<p>Zusätzliche Inhalte, die über die Basis-Kurse hinausgehen und tiefer einsteigen.</p>
+</div>
+<div class="card">
+<h3>Mitglieder-Orientierung</h3>
+<p>Klare nächste Schritte, statt planlos zwischen unzähligen Finanzthemen zu springen.</p>
+</div>
+<div class="card">
+<h3>Premium-Zugang</h3>
+<p>Mit ELITE erhältst du Zugriff auf vertiefte Inhalte, Deep Dives und Bonusbereiche.</p>
+</div>
+</div>
 
-      <div class="club-grid">
-        <div class="club-item">
-          <strong>Kontinuität statt Aktionismus</strong>
-          <span>Der Fokus liegt auf langfristigem Denken und stabilen Entscheidungen statt auf Hype und kurzfristigem Reagieren.</span>
-        </div>
+<div class="grid-2" style="margin-top:24px;">
+<div class="card">
+<h2>Für wen der Club gedacht ist</h2>
+<p>
+Der Club richtet sich an Nutzer, die nicht nur einzelne Tipps suchen,
+sondern ihren Vermögensaufbau dauerhaft professioneller strukturieren möchten.
+</p>
+<p>
+Ob Einsteiger oder fortgeschritten: Der Club ergänzt die Kurse durch
+Wiederholung, Motivation, Vertiefung und einen roten Faden.
+</p>
+</div>
 
-        <div class="club-item">
-          <strong>Strukturierte Entwicklung</strong>
-          <span>Mit PRO und ELITE entwickelst du dein Finanzsystem nicht zufällig, sondern in einer klaren Reihenfolge.</span>
-        </div>
+<div class="card">
+<h2>Dein nächster Schritt</h2>
+<p>
+Starte mit den Kursen, schalte dann PRO oder ELITE frei und nutze den Club als
+zentrale Anlaufstelle für Orientierung, Vertiefung und Bonuswissen.
+</p>
+<div class="stack-actions">
+<a href="kurse.html" class="btn btn-outline">Kurse ansehen</a>
+<a href="premium.html" class="btn btn-gold">Upgrade öffnen</a>
+<a href="elite-club.html" class="btn btn-outline">Elite Club öffnen</a>
+</div>
+</div>
+</div>
+</div>
+</main>
 
-        <div class="club-item">
-          <strong>Mehr Klarheit</strong>
-          <span>Der Club hilft dir, Informationen einzuordnen und aus Wissen konkrete Schritte abzuleiten.</span>
-        </div>
+<footer class="site-footer">
+<div class="container">© 2026 MyFinIQ</div>
+</footer>
 
-        <div class="club-item">
-          <strong>Passend zu deinem Niveau</strong>
-          <span>FREE, PRO und ELITE sorgen dafür, dass du genau den Zugang nutzen kannst, der zu deinem aktuellen Stand passt.</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta-box">
-      <strong>Dein nächster Schritt:</strong><br />
-      Wenn du nicht nur lesen, sondern echte Module nutzen und dein Finanzsystem aktiv ausbauen willst,
-      ist jetzt der richtige Zeitpunkt für dein Upgrade.
-      <div style="margin-top: 18px;">
-        <a href="premium.html" class="btn-gold">Jetzt upgraden</a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    © 2026 MyFinIQ
-  </footer>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="header.js"></script>
+<script type="module" src="auth-nav.js"></script>
 </body>
 </html>

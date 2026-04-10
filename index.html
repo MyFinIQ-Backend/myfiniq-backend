@@ -1,223 +1,231 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyFinIQ – Vermögen mit Strategie aufbauen</title>
-  <meta
-    name="description"
-    content="MyFinIQ hilft dir, mit ETFs, KI und klaren Strategien langfristig Vermögen aufzubauen."
-  />
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MyFinIQ – Finanzbildung, Strategie, Wachstum</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
+<body>
+<header class="site-header">
+<div class="container nav-wrap">
+<a href="index.html" class="logo">MyFinIQ</a>
 
-<body data-page="index">
+<button class="nav-toggle" id="navToggle" aria-label="Menü öffnen">☰</button>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-text">
-          <span class="eyebrow">Finanzbildung. Strategie. Wachstum.</span>
-          <h1>Baue Vermögen mit Strategie – nicht mit Glück.</h1>
-          <p>
-            MyFinIQ zeigt dir, wie du mit ETFs, KI und klaren Investmentstrategien
-            langfristig Vermögen aufbaust – verständlich, professionell und motivierend.
-          </p>
+<nav class="main-nav" id="mainNav">
+<a href="index.html" class="active">Start</a>
+<a href="kurse.html">Kurse</a>
+<a href="club.html">Club</a>
+<a href="tools.html">Tools</a>
+<a href="buecher.html">Bücher</a>
+<a href="ueber.html">Über uns</a>
+<a href="premium.html">Upgrade</a>
+<a href="dashboard.html" data-auth="dashboard" style="display:none;">Dashboard</a>
+<a href="registrieren.html" data-auth="register">Registrieren</a>
+<a href="login.html" class="btn btn-gold" data-auth="login">Login</a>
+<a href="#" class="btn btn-outline" data-auth="logout" style="display:none;">Logout</a>
+</nav>
+</div>
+</header>
 
-          <div class="hero-actions">
-            <a href="leadmagnet.html" class="btn btn-gold">Kostenlos starten</a>
-            <a href="kurse.html" class="btn btn-outline">Kurse entdecken</a>
-          </div>
+<main>
+<section class="hero">
+<div class="container hero-grid">
+<div class="hero-copy">
+<div class="kicker">Finanzbildung. Strategie. Wachstum.</div>
+<h1>Baue Vermögen mit Strategie – nicht mit Glück.</h1>
+<p>
+MyFinIQ zeigt dir verständlich, professionell und motivierend, wie du mit ETFs,
+soliden Investment-Grundlagen, KI-gestützten Ideen und einem klaren System dein
+Vermögen langfristig strukturierst. Statt unübersichtlicher Informationen bekommst du
+hier einen echten Weg mit klaren Schritten, Lerninhalten, Premium-Bereichen,
+E-Books und persönlichem Fortschritt.
+</p>
 
-          <div class="hero-stats">
-            <div class="stat-card">
-              <strong>1 Ziel</strong>
-              <span>Langfristiger Vermögensaufbau</span>
-            </div>
-            <div class="stat-card">
-              <strong>3 Säulen</strong>
-              <span>Kurse, Club, Tools</span>
-            </div>
-            <div class="stat-card">
-              <strong>MyFinIQ</strong>
-              <span>Dein Finanzsystem</span>
-            </div>
-          </div>
-        </div>
+<div class="hero-actions">
+<a href="registrieren.html" class="btn btn-gold">Kostenlos starten</a>
+<a href="kurse.html" class="btn btn-outline">Kurse entdecken</a>
+</div>
 
-        <div class="hero-visual card">
-          <div class="dashboard-preview">
-            <div class="preview-top">
-              <span>Portfolio</span>
-              <strong>128.450 €</strong>
-            </div>
+<div class="hero-feature-row">
+<div class="card">
+<strong>1 Ziel</strong>
+<p>Langfristiger Vermögensaufbau mit Struktur und Klarheit.</p>
+</div>
+<div class="card">
+<strong>3 Säulen</strong>
+<p>Kurse, Club und Tools greifen sinnvoll ineinander.</p>
+</div>
+<div class="card">
+<strong>MyFinIQ</strong>
+<p>Dein persönliches Finanzsystem statt Zufallswissen.</p>
+</div>
+</div>
+</div>
 
-            <div class="chart-placeholder">
-              <div class="line line-1"></div>
-              <div class="line line-2"></div>
-            </div>
+<div class="hero-panel card">
+<div class="hero-panel-top">
+<div class="hero-panel-title">Individuelle Zielübersicht</div>
+<div class="hero-panel-value" id="portfolioValueView">128.450 €</div>
+</div>
 
-            <div class="mini-cards">
-              <div class="mini-card">
-                <span>ETF Sparplan</span>
-                <strong>300 €/Monat</strong>
-              </div>
-              <div class="mini-card">
-                <span>Renditeziel</span>
-                <strong>7 % p.a.</strong>
-              </div>
-              <div class="mini-card">
-                <span>KI Analyse</span>
-                <strong>Aktiv</strong>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="chart-box">
+<div class="chart-line one"></div>
+<div class="chart-line two"></div>
+</div>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Warum MyFinIQ?</span>
-          <h2>Ein System statt Informationschaos</h2>
-          <p>
-            MyFinIQ bündelt Finanzwissen, klare Strategien und moderne Tools an einem Ort.
-          </p>
-        </div>
+<div class="panel-stats">
+<div class="stat-item">
+<span>ETF Sparplan</span>
+<strong id="etfMonthlyView">300 €/Monat</strong>
+</div>
+<div class="stat-item">
+<span>Renditeziel</span>
+<strong id="targetReturnView">7 % p.a.</strong>
+</div>
+<div class="stat-item">
+<span>KI Analyse</span>
+<strong id="aiStatusView">Aktiv</strong>
+</div>
+</div>
 
-        <div class="grid-3">
-          <article class="card">
-            <h3>Verständliche Kurse</h3>
-            <p>Lerne strukturiert Vermögensaufbau und ETF-Strategien.</p>
-          </article>
+<div class="card" style="padding:18px;">
+<div class="kicker" style="margin-bottom:10px;">Rechten Bereich anpassen</div>
 
-          <article class="card">
-            <h3>Wiederkehrender Mehrwert</h3>
-            <p>Regelmäßige Inhalte und Strategien im Club.</p>
-          </article>
+<div class="control-grid">
+<div>
+<label for="portfolioInput">Portfolio</label>
+<input id="portfolioInput" type="text" value="128.450 €" />
+</div>
 
-          <article class="card">
-            <h3>Praktische Tools</h3>
-            <p>Rechner und Planer für deinen Finanzalltag.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+<div>
+<label for="etfInput">ETF Sparplan</label>
+<input id="etfInput" type="text" value="300 €/Monat" />
+</div>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Bereiche</span>
-          <h2>Alles an einem Ort</h2>
-        </div>
+<div>
+<label for="returnInput">Renditeziel</label>
+<input id="returnInput" type="text" value="7 % p.a." />
+</div>
 
-        <div class="grid-4">
-          <a href="kurse.html" class="card">Kurse</a>
-          <a href="club.html" class="card">Club</a>
-          <a href="tools.html" class="card">Tools</a>
-          <a href="buecher.html" class="card">Bücher</a>
-        </div>
-      </div>
-    </section>
+<div>
+<label for="aiInput">KI Analyse</label>
+<select id="aiInput">
+<option value="Aktiv">Aktiv</option>
+<option value="In Vorbereitung">In Vorbereitung</option>
+<option value="Deaktiviert">Deaktiviert</option>
+</select>
+</div>
+</div>
 
-    <section class="section">
-      <div class="container newsletter-box card">
-        <div>
-          <span class="eyebrow">Lead-Magnet</span>
-          <h2>Starte mit dem kostenlosen Finanzguide</h2>
-          <p>
-            Sichere dir den Guide „Die 7 größten Fehler beim Vermögensaufbau“.
-          </p>
-        </div>
+<div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap;">
+<button class="btn btn-gold" id="saveHeroData">Speichern</button>
+<button class="btn btn-outline" id="resetHeroData">Zurücksetzen</button>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-        <div class="newsletter-form">
-          <input
-            type="text"
-            id="mfLeadName"
-            placeholder="Dein Name"
-            autocomplete="name"
-          />
+<section class="section">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">Warum MyFinIQ</div>
+<h2>Dein klarer Weg durch den Finanz-Dschungel</h2>
+<p>
+Keine unnötige Fachsprache, kein chaotisches Sammeln von Tipps, sondern ein
+professioneller Aufbau, der Einsteiger und ambitionierte Nutzer gleichermaßen abholt.
+</p>
+</div>
 
-          <input
-            type="email"
-            id="mfLeadEmail"
-            placeholder="Deine E-Mail-Adresse"
-            autocomplete="email"
-          />
+<div class="grid-3">
+<div class="card">
+<h3>Verständlich</h3>
+<p>Keine unnötige Fachsprache, sondern klare Inhalte mit echtem Nutzen.</p>
+</div>
+<div class="card">
+<h3>Strukturiert</h3>
+<p>Schritt für Schritt statt Informationschaos und widersprüchlicher Tipps.</p>
+</div>
+<div class="card">
+<h3>Motivierend</h3>
+<p>Du siehst deinen Fortschritt und baust dein Vermögen systematisch auf.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
 
-          <button
-            type="button"
-            id="mfLeadButton"
-            class="btn btn-gold"
-          >
-            Guide sichern
-          </button>
-        </div>
+<footer class="site-footer">
+<div class="container">© 2026 MyFinIQ</div>
+</footer>
 
-        <p id="mfLeadMessage" class="form-message" style="min-height: 24px;"></p>
-      </div>
-    </section>
-  </main>
+<script type="module" src="auth-nav.js"></script>
+<script>
+const defaults = {
+portfolio: "128.450 €",
+etf: "300 €/Monat",
+target: "7 % p.a.",
+ai: "Aktiv"
+};
 
-  <footer class="site-footer">
-    <div class="container">
-      © 2026 MyFinIQ
-    </div>
-  </footer>
+const portfolioInput = document.getElementById("portfolioInput");
+const etfInput = document.getElementById("etfInput");
+const returnInput = document.getElementById("returnInput");
+const aiInput = document.getElementById("aiInput");
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const nameInput = document.getElementById("mfLeadName");
-      const emailInput = document.getElementById("mfLeadEmail");
-      const leadButton = document.getElementById("mfLeadButton");
-      const messageBox = document.getElementById("mfLeadMessage");
+const portfolioValueView = document.getElementById("portfolioValueView");
+const etfMonthlyView = document.getElementById("etfMonthlyView");
+const targetReturnView = document.getElementById("targetReturnView");
+const aiStatusView = document.getElementById("aiStatusView");
 
-      if (!nameInput || !emailInput || !leadButton || !messageBox) {
-        return;
-      }
+function applyHeroData(data) {
+portfolioInput.value = data.portfolio;
+etfInput.value = data.etf;
+returnInput.value = data.target;
+aiInput.value = data.ai;
 
-      function showMessage(text, color) {
-        messageBox.textContent = text;
-        messageBox.style.color = color;
-      }
+portfolioValueView.textContent = data.portfolio;
+etfMonthlyView.textContent = data.etf;
+targetReturnView.textContent = data.target;
+aiStatusView.textContent = data.ai;
+}
 
-      function handleMyFinIQLead() {
-        const name = nameInput.value.trim();
-        const email = emailInput.value.trim();
+function loadHeroData() {
+const saved = localStorage.getItem("myfiniqHeroPanel");
+if (!saved) {
+applyHeroData(defaults);
+return;
+}
 
-        messageBox.textContent = "";
+try {
+const parsed = JSON.parse(saved);
+applyHeroData({ ...defaults, ...parsed });
+} catch {
+applyHeroData(defaults);
+}
+}
 
-        if (!name || !email) {
-          showMessage("Bitte fülle alle Felder aus.", "#9f1c1c");
-          return;
-        }
+document.getElementById("saveHeroData").addEventListener("click", () => {
+const data = {
+portfolio: portfolioInput.value.trim() || defaults.portfolio,
+etf: etfInput.value.trim() || defaults.etf,
+target: returnInput.value.trim() || defaults.target,
+ai: aiInput.value
+};
 
-        const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+localStorage.setItem("myfiniqHeroPanel", JSON.stringify(data));
+applyHeroData(data);
+alert("Die rechte Übersicht wurde gespeichert.");
+});
 
-        if (!emailIsValid) {
-          showMessage("Bitte gib eine gültige E-Mail-Adresse ein.", "#9f1c1c");
-          return;
-        }
+document.getElementById("resetHeroData").addEventListener("click", () => {
+localStorage.removeItem("myfiniqHeroPanel");
+applyHeroData(defaults);
+});
 
-        showMessage(
-          "Danke " + name + "! Dein kostenloser Finanzguide ist für dich vorgemerkt.",
-          "#166534"
-        );
-
-        nameInput.value = "";
-        emailInput.value = "";
-        nameInput.blur();
-        emailInput.blur();
-      }
-
-      leadButton.addEventListener("click", handleMyFinIQLead);
-    });
-  </script>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="header.js"></script>
-
+loadHeroData();
+</script>
 </body>
 </html>

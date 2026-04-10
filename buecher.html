@@ -1,398 +1,89 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bücher – MyFinIQ</title>
-  <link rel="stylesheet" href="styles.css" />
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #faf9f6;
-      color: #222;
-    }
-
-    .container {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 40px 20px 60px;
-    }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 34px;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin: 0 0 12px;
-      color: #111;
-    }
-
-    .hero p {
-      max-width: 780px;
-      margin: 0 auto;
-      color: #555;
-      line-height: 1.7;
-      font-size: 1.05rem;
-    }
-
-    .book-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 28px;
-    }
-
-    .book-card {
-      background: #fff;
-      border-radius: 22px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      border: 1px solid #eee;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .ebook-label {
-      display: inline-block;
-      align-self: flex-start;
-      background: #f3e6a5;
-      color: #6f5600;
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-
-    .book-title {
-      font-size: 1.35rem;
-      line-height: 1.45;
-      margin: 0 0 16px;
-      color: #111;
-      min-height: 88px;
-    }
-
-    .book-image-wrap {
-      width: 100%;
-      border-radius: 18px;
-      overflow: hidden;
-      background: #f8f8f8;
-      border: 1px solid #eee;
-      margin-bottom: 18px;
-    }
-
-    .book-image {
-      width: 100%;
-      height: 380px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .book-text {
-      color: #555;
-      line-height: 1.7;
-      margin-bottom: 18px;
-      flex-grow: 1;
-    }
-
-    .price-box {
-      background: #fffdf5;
-      border: 1px solid #f0e2a5;
-      border-radius: 16px;
-      padding: 14px 16px;
-      margin-bottom: 16px;
-      text-align: center;
-    }
-
-    .price-box strong {
-      display: block;
-      font-size: 1.7rem;
-      color: #b8860b;
-      margin-bottom: 4px;
-    }
-
-    .price-box span {
-      color: #6b7280;
-      font-size: 0.95rem;
-    }
-
-    .btn-gold {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #d4af37, #b8860b);
-      color: white;
-      font-size: 1rem;
-      font-weight: 700;
-      padding: 15px 18px;
-      text-decoration: none;
-      cursor: pointer;
-      box-sizing: border-box;
-    }
-
-    .btn-outline {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      background: #fff;
-      color: #333;
-      font-size: 0.98rem;
-      font-weight: 600;
-      padding: 14px 18px;
-      text-decoration: none;
-      cursor: pointer;
-      box-sizing: border-box;
-      margin-top: 10px;
-    }
-
-    .bundle-box {
-      margin-top: 34px;
-      background: linear-gradient(135deg, #fff8dc, #fffdf5);
-      border: 1px solid #ecd88b;
-      border-radius: 24px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-    }
-
-    .bundle-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .bundle-box h2 {
-      margin: 0 0 12px;
-      font-size: 2rem;
-      color: #111;
-    }
-
-    .bundle-box p {
-      margin: 0 0 14px;
-      line-height: 1.7;
-      color: #4b5563;
-    }
-
-    .bundle-list {
-      margin: 0;
-      padding-left: 20px;
-      color: #444;
-      line-height: 1.8;
-    }
-
-    .bundle-price-box {
-      background: #fff;
-      border: 1px solid #eee3b5;
-      border-radius: 20px;
-      padding: 24px;
-      text-align: center;
-    }
-
-    .bundle-price-box .old-price {
-      color: #888;
-      text-decoration: line-through;
-      font-size: 1rem;
-      margin-bottom: 6px;
-      display: block;
-    }
-
-    .bundle-price-box .new-price {
-      display: block;
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #b8860b;
-      margin-bottom: 6px;
-    }
-
-    .bundle-price-box .save-note {
-      display: block;
-      color: #166534;
-      font-weight: 600;
-      margin-bottom: 18px;
-    }
-
-    .site-footer {
-      background: #111827;
-      color: #fff;
-      text-align: center;
-      padding: 18px 20px;
-      margin-top: 50px;
-    }
-
-    @media (max-width: 1000px) {
-      .book-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .bundle-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-
-      .book-title {
-        min-height: auto;
-      }
-
-      .book-image {
-        height: 420px;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bücher | MyFinIQ</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="buecher">
-  <main class="container">
-    <section class="hero">
-      <div class="hero-kicker">MyFinIQ E-Books</div>
-      <h1>Deine E-Books für strukturierten Vermögensaufbau</h1>
-      <p>
-        Hier findest du deine 3 MyFinIQ E-Books als digitale Downloads.
-        Jedes E-Book unterstützt dich dabei, Vermögensaufbau, Denkfehler,
-        Disziplin, Strategie und Zukunftsthemen wie KI besser zu verstehen.
-      </p>
-    </section>
+<body>
+<header class="site-header">
+<div class="container nav-wrap">
+<a href="index.html" class="logo">MyFinIQ</a>
 
-    <section class="book-grid">
-      <article class="book-card">
-        <div class="ebook-label">Ebook 1</div>
-        <h2 class="book-title">
-          Intelligent Geld investieren:<br />
-          Warum 90% der Menschen falsch investieren – und wie du es ab heute besser machst
-        </h2>
+<button class="nav-toggle" id="navToggle" aria-label="Menü öffnen">☰</button>
 
-        <div class="book-image-wrap">
-          <img
-            src="images/ebook-1.jpg"
-            alt="Cover von Ebook 1: Intelligent Geld investieren – Warum 90% der Menschen falsch investieren"
-            class="book-image"
-          />
-        </div>
+<nav class="main-nav" id="mainNav">
+<a href="index.html">Start</a>
+<a href="kurse.html">Kurse</a>
+<a href="club.html">Club</a>
+<a href="tools.html">Tools</a>
+<a href="buecher.html" class="active">Bücher</a>
+<a href="ueber.html">Über uns</a>
+<a href="premium.html">Upgrade</a>
+<a href="dashboard.html" data-auth="dashboard" style="display:none;">Dashboard</a>
+<a href="registrieren.html" data-auth="register">Registrieren</a>
+<a href="login.html" class="btn btn-gold" data-auth="login">Login</a>
+<a href="#" class="btn btn-outline" data-auth="logout" style="display:none;">Logout</a>
+</nav>
+</div>
+</header>
 
-        <p class="book-text">
-          Der Einstieg in deine erste E-Bookreihe. Dieses E-Book zeigt dir,
-          warum viele Menschen trotz Sparen und Investieren finanziell nicht
-          vorankommen, wie Denkfehler entstehen und warum intelligentes
-          Investieren mit Klarheit und Struktur beginnt.
-        </p>
+<main class="section">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">MyFinIQ E-Books</div>
+<h1>Deine E-Books für strukturierten Vermögensaufbau</h1>
+<p>
+Hier findest du deine 3 MyFinIQ E-Books sowie das Bundle mit allen drei Titeln.
+Gekaufte Bücher findest du später zusätzlich in deiner persönlichen Bibliothek.
+</p>
+</div>
 
-        <div class="price-box">
-          <strong>19,90 €</strong>
-          <span>Digitaler Download</span>
-        </div>
+<div class="grid-4 books-grid">
+<div class="card">
+<img src="images/ebook-1.jpg" alt="E-Book 1" class="book-cover" />
+<h3>E-Book 1</h3>
+<p>Intelligent Geld investieren: Warum 90 % der Menschen falsch investieren.</p>
+<div class="price-small">19,90 €</div>
+<a href="ebook1.html" class="btn btn-gold">Jetzt ansehen</a>
+</div>
 
-        <a href="ebook1.html" class="btn-gold">Jetzt kaufen</a>
-        <a href="leadmagnet.html" class="btn-outline">Mehr erfahren</a>
-      </article>
+<div class="card">
+<img src="images/ebook-2.jpg" alt="E-Book 2" class="book-cover" />
+<h3>E-Book 2</h3>
+<p>Strategien, die wirklich funktionieren: Denkfehler vermeiden und Vermögen aufbauen.</p>
+<div class="price-small">19,90 €</div>
+<a href="ebook2.html" class="btn btn-gold">Jetzt ansehen</a>
+</div>
 
-      <article class="book-card">
-        <div class="ebook-label">Ebook 2</div>
-        <h2 class="book-title">
-          Intelligent Geld investieren – Strategien, die wirklich funktionieren:
-          Wie Du Denkfehler vermeidest, Risiken beherrschst und konsequent Vermögen aufbaust
-        </h2>
+<div class="card">
+<img src="images/ebook-3.jpg" alt="E-Book 3" class="book-cover" />
+<h3>E-Book 3</h3>
+<p>Die stille KI-Revolution: Wie Anleger jenseits des Hypes Vermögen aufbauen.</p>
+<div class="price-small">19,90 €</div>
+<a href="ebook3.html" class="btn btn-gold">Jetzt ansehen</a>
+</div>
 
-        <div class="book-image-wrap">
-          <img
-            src="images/ebook-2.jpg"
-            alt="Cover von Ebook 2: Strategien, die wirklich funktionieren"
-            class="book-image"
-          />
-        </div>
+<div class="card">
+<div class="bundle-row">
+<img src="images/ebook-1.jpg" alt="Bundle Teil 1" class="bundle-thumb" />
+<img src="images/ebook-2.jpg" alt="Bundle Teil 2" class="bundle-thumb" />
+<img src="images/ebook-3.jpg" alt="Bundle Teil 3" class="bundle-thumb" />
+</div>
+<h3>3er-Bundle</h3>
+<p>Alle drei E-Books zusammen mit Preisvorteil.</p>
+<div class="price-small">49,95 €</div>
+<a href="bundle.html" class="btn btn-gold">Bundle ansehen</a>
+</div>
+</div>
+</div>
+</main>
 
-        <p class="book-text">
-          Der zweite Band vertieft die Umsetzung. Im Fokus stehen Disziplin,
-          Geduld, Verhalten nach der Entscheidung, Marktlärm, Kontrolle und
-          die Fähigkeit, langfristig stabil zu investieren statt impulsiv zu reagieren.
-        </p>
+<footer class="site-footer">
+<div class="container">© 2026 MyFinIQ</div>
+</footer>
 
-        <div class="price-box">
-          <strong>19,90 €</strong>
-          <span>Digitaler Download</span>
-        </div>
-
-        <a href="ebook2.html" class="btn-gold">Jetzt kaufen</a>
-        <a href="leadmagnet.html" class="btn-outline">Mehr erfahren</a>
-      </article>
-
-      <article class="book-card">
-        <div class="ebook-label">Ebook 3</div>
-        <h2 class="book-title">
-          Die stille KI-Revolution:<br />
-          Wie Anleger jenseits des Hypes Vermögen aufbauen
-        </h2>
-
-        <div class="book-image-wrap">
-          <img
-            src="images/ebook-3.jpg"
-            alt="Cover von Ebook 3: Die stille KI-Revolution"
-            class="book-image"
-          />
-        </div>
-
-        <p class="book-text">
-          Der erste Band deiner zweiten E-Bookreihe verbindet Zukunftsthema
-          KI mit langfristigem Vermögensaufbau. Du lernst, Hype von Substanz
-          zu trennen, Geduld über Timing zu stellen und KI strategisch in
-          eine ruhige Investmentlogik einzuordnen.
-        </p>
-
-        <div class="price-box">
-          <strong>19,90 €</strong>
-          <span>Digitaler Download</span>
-        </div>
-
-        <a href="ebook3.html" class="btn-gold">Jetzt kaufen</a>
-        <a href="leadmagnet.html" class="btn-outline">Mehr erfahren</a>
-      </article>
-    </section>
-
-    <section class="bundle-box">
-      <div class="bundle-grid">
-        <div>
-          <div class="hero-kicker">3er-Bundle</div>
-          <h2>Alle 3 E-Books im Bundle</h2>
-          <p>
-            Sichere dir alle drei MyFinIQ E-Books zusammen und baue dir eine
-            starke Wissensbasis für langfristigen Vermögensaufbau, mentale
-            Stabilität beim Investieren und strategisches Denken im KI-Zeitalter auf.
-          </p>
-
-          <ul class="bundle-list">
-            <li>Ebook 1: Grundlagen, Denkfehler und intelligentes Investieren</li>
-            <li>Ebook 2: Umsetzung, Disziplin und stabile Strategien</li>
-            <li>Ebook 3: KI, Hype, Struktur und langfristiger Vermögensaufbau</li>
-          </ul>
-        </div>
-
-        <div class="bundle-price-box">
-          <span class="old-price">Statt 59,70 €</span>
-          <span class="new-price">49,95 €</span>
-          <span class="save-note">Du sparst 9,75 €</span>
-
-          <a href="bundle.html" class="btn-gold">Bundle jetzt kaufen</a>
-          <a href="dashboard.html" class="btn-outline">Zum MyFinIQ Bereich</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    © 2026 MyFinIQ
-  </footer>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="header.js"></script>
+<script type="module" src="auth-nav.js"></script>
 </body>
 </html>

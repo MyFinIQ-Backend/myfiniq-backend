@@ -1,117 +1,114 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kurse – MyFinIQ</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kurse | MyFinIQ</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="kurse">
-  <main class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Kurse</span>
-        <h1>MyFinIQ Vermögenssystem</h1>
-        <p>Hier findest du dein zentrales Premium-Kursangebot.</p>
-      </div>
+<body>
+<header class="site-header">
+<div class="container nav-wrap">
+<a href="index.html" class="logo">MyFinIQ</a>
 
-      <div class="pricing-card card">
-        <div>
-          <span class="eyebrow">Hauptprodukt</span>
-          <h2>MyFinIQ Vermögenssystem</h2>
-          <p>
-            Der zentrale Premium-Kurs deiner Plattform. Schritt für Schritt von finanzieller
-            Klarheit bis zur langfristigen Vermögensstrategie.
-          </p>
+<button class="nav-toggle" id="navToggle" aria-label="Menü öffnen">☰</button>
 
-          <div class="card" style="margin-top: 18px;">
-            <h3>Modul 1: Finanzielle Klarheit</h3>
-            <p>Ausgangslage erfassen, Ziele definieren und eine saubere Sparlogik entwickeln.</p>
-          </div>
+<nav class="main-nav" id="mainNav">
+<a href="index.html">Start</a>
+<a href="kurse.html" class="active">Kurse</a>
+<a href="club.html">Club</a>
+<a href="tools.html">Tools</a>
+<a href="buecher.html">Bücher</a>
+<a href="ueber.html">Über uns</a>
+<a href="premium.html">Upgrade</a>
+<a href="dashboard.html" data-auth="dashboard" style="display:none;">Dashboard</a>
+<a href="registrieren.html" data-auth="register">Registrieren</a>
+<a href="login.html" class="btn btn-gold" data-auth="login">Login</a>
+<a href="#" class="btn btn-outline" data-auth="logout" style="display:none;">Logout</a>
+</nav>
+</div>
+</header>
 
-          <div class="card" style="margin-top: 18px;">
-            <h3>Modul 2: Grundlagen der Börse</h3>
-            <p>Aktien, ETFs, Indizes, Risiko und Rendite verständlich einordnen.</p>
-          </div>
+<main class="section">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">Kurse</div>
+<h1>MyFinIQ Vermögenssystem</h1>
+<p>
+Hier findest du dein zentrales Kursangebot. Vom Einstieg bis zur strukturierten
+Investment-Routine lernst du Schritt für Schritt, wie du Klarheit,
+Disziplin und Strategie in deinen Vermögensaufbau bringst.
+</p>
+</div>
 
-          <div class="card" style="margin-top: 18px;">
-            <h3>Modul 3: ETF-Strategie</h3>
-            <p>Ein einfaches, robustes ETF-System für langfristigen Vermögensaufbau.</p>
-          </div>
-        </div>
+<div class="course-layout">
+<div class="course-modules">
+<div class="card">
+<h2>Das ist im Kurssystem enthalten</h2>
+<p>
+Das MyFinIQ Vermögenssystem führt dich von den Grundlagen bis zu einem
+stabilen, langfristigen Finanzplan. Du lernst nicht nur Produkte kennen,
+sondern entwickelst ein echtes Verständnis dafür, wie Vermögensaufbau
+sinnvoll funktioniert.
+</p>
+</div>
 
-        <div class="price-box">
-          <span class="price-label">Mitgliedschaft & Zugriff</span>
-          <span class="price">ab 29,00 € / Monat</span>
-          <p>
-            Wähle deinen Zugang zu MyFinIQ. PRO schaltet alle 6 PRO-Module frei.
-            ELITE erweitert deinen Zugang zusätzlich um exklusive ELITE-Module und Bonusinhalte.
-          </p>
+<div class="card">
+<h3>Modul 1: Finanzielle Klarheit</h3>
+<p>Bestandsaufnahme, Ziele, Prioritäten und saubere Struktur im Alltag.</p>
+</div>
 
-          <div class="actions">
-            <button id="buyProBtn" class="btn btn-gold full-width">PRO kaufen</button>
-            <button id="buyEliteBtn" class="btn btn-gold full-width">ELITE kaufen</button>
-            <a href="premium.html" class="btn btn-outline full-width">Zur Upgrade-Seite</a>
-            <a href="pro-kurse.html" class="btn btn-outline full-width">PRO-Kursbereich ansehen</a>
-            <a href="elite-club.html" class="btn btn-outline full-width">ELITE-Bereich ansehen</a>
-          </div>
+<div class="card">
+<h3>Modul 2: Grundlagen der Börse</h3>
+<p>Aktien, ETFs, Indizes, Risiko, Rendite und Marktverständnis einfach erklärt.</p>
+</div>
 
-          <p class="helper-text" style="margin-top: 16px;">
-            Hinweis: Du musst eingeloggt sein, damit dein Kauf deinem Benutzerkonto zugeordnet wird.
-          </p>
-        </div>
-      </div>
-    </div>
-  </main>
+<div class="card">
+<h3>Modul 3: ETF-Strategie</h3>
+<p>Wie du robuste ETF-Strukturen für langfristigen Vermögensaufbau nutzt.</p>
+</div>
 
-  <footer class="site-footer">
-    <div class="container">© 2026 MyFinIQ</div>
-  </footer>
+<div class="card">
+<h3>Modul 4: Denkfehler vermeiden</h3>
+<p>Emotionen, Impulskäufe, Angst und Gier besser verstehen und kontrollieren.</p>
+</div>
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="firebase-config.js"></script>
-  <script src="header.js"></script>
+<div class="card">
+<h3>Modul 5: Strukturierter Aufbau</h3>
+<p>Sparraten, Aufteilung, Übersicht und eine vernünftige Vermögensarchitektur.</p>
+</div>
 
-  <script>
-    async function createPlanCheckout(plan) {
-      const user = firebase.auth().currentUser;
+<div class="card">
+<h3>Modul 6: Langfristige Strategie</h3>
+<p>Wie du diszipliniert drangeblieben und dein System dauerhaft weiterentwickelst.</p>
+</div>
+</div>
 
-      if (!user) {
-        alert("Bitte logge dich zuerst ein.");
-        window.location.href = "login.html";
-        return;
-      }
+<aside class="pricing-box card">
+<div class="kicker">Mitgliedschaft & Zugriff</div>
+<h2 style="margin:0;">Wähle dein Niveau</h2>
+<div class="price">ab 29,00 € / Monat</div>
 
-      try {
-        const response = await fetch("/create-checkout-session", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            uid: user.uid,
-            plan: plan
-          })
-        });
+<p>
+PRO schaltet alle 6 PRO-Module frei. ELITE erweitert deinen Zugang zusätzlich um
+exklusive Strategiebereiche, Deep Dives und Premium-Inhalte.
+</p>
 
-        const data = await response.json();
+<div class="stack-actions">
+<a href="premium.html" class="btn btn-gold">PRO kaufen</a>
+<a href="premium.html" class="btn btn-gold">ELITE kaufen</a>
+<a href="pro-kurse.html" class="btn btn-outline">PRO-Kursbereich öffnen</a>
+<a href="elite-club.html" class="btn btn-outline">ELITE-Bereich öffnen</a>
+</div>
+</aside>
+</div>
+</div>
+</main>
 
-        if (!response.ok) {
-          throw new Error(data.error || "Serverfehler beim Erstellen des Checkouts.");
-        }
+<footer class="site-footer">
+<div class="container">© 2026 MyFinIQ</div>
+</footer>
 
-        window.location.href = data.url;
-      } catch (error) {
-        console.error(error);
-        alert(error.message || "Serverfehler beim Erstellen des Checkouts.");
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("buyProBtn").addEventListener("click", () => createPlanCheckout("pro"));
-      document.getElementById("buyEliteBtn").addEventListener("click", () => createPlanCheckout("elite"));
-    });
-  </script>
+<script type="module" src="auth-nav.js"></script>
 </body>
 </html>
